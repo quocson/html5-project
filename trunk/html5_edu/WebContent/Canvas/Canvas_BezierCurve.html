@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BezierCurveTo example</title>
+	<script>
+    function beginDemo()
+      {
+        var canvas = document.getElementById("demo")
+        var ctx = canvas.getContext('2d');        
+        
+				ctx.beginPath();              
+				ctx.lineWidth="3";
+				ctx.strokeStyle="black"; 
+				ctx.moveTo(100,100);
+				ctx.bezierCurveTo(200,200,200,0,300,100);
+				ctx.stroke();                 
+      }
+     </script>
+</head>
+    <body onload="beginDemo();">
+	    <canvas id="demo" width="400" height="400"></canvas>
+	</body>
+</html> 

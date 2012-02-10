@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head></head>
+<body>
+  <canvas id="myCanvas" width="400" height="300" style="border: 1px solid #333;"></canvas>
+  
+  <script type="text/javascript">
+    var canvas = document.getElementById('myCanvas');
+    var ctx = canvas.getContext('2d');
+
+    ctx.beginPath();
+    ctx.moveTo(30, 20);  
+    ctx.lineTo(130, 20);
+    ctx.lineTo(130, 70);
+    
+    //ctx.strokeStyle = "blue";
+    ctx.stroke();
+    //ctx.fill();
+  </script>
+</body>
+</html>

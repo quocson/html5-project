@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<title>HTML5</title>
+  <style type="text/css">
+    /**************** Default CSS ********************/
+    body { background-color: white; padding: 20px; }
+    section {  border: 4px solid #AAA; width: 600px; text-align: center; padding: 30px;  box-shadow:7px 5px 11px #aaa;}
+    article { font-size: 30px; }
+    /**************** Default CSS ********************/
+
+    /******* HTML5 CSS3 Example ******
+    article { text-shadow:2px 2px 2px #ccc; }**/
+  </style>
+  <script src="resources/js/jquery-1.5.2.min.js"></script>
+  <script>  	
+  	var video;
+	
+	  function init() {
+	  	video = document.getElementById("video");
+		}
+		function playBtn() {
+			video.play();
+		}
+		function pauseBtn() {
+			video.pause();
+		}
+		function stopBtn() {
+			video.pause();
+			video.currentTime = 0;
+		}
+		
+		function skipBackBtn() {
+			video.currentTime -=2;
+		}
+	  
+  	function showText() {
+  		$("#videoText").show();
+  		$("#videoText").animate({
+				opacity:0.8
+			}, 600 );
+  	}
+  	function hideText() {
+  		$("#videoText").animate({
+				opacity:0.0
+			}, 600, function(){
+				$("#videoText").hide();
+			} );
+  		
+  	}
+  </script>
+</head>
+<body onload="init()">
+
+	<header>
+      <div style="text-shadow:3px 2px 3px #888;">
+        HTML5 : Video and Canvas
+      </div>
+	</header>
+
+  <section>
+    <article>					        	
+			<video width="540" height=300 id="video" controls poster="resources/img/poster1.png"
+				onPlay="showText();" onPause="hideText();"> 
+				<source src="resources/img/chrome.webm" type='video/webm; codecs="vp8, vorbis"' /> 
+				<source src="resources/img/chrome.mp4"  type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' /> 
+				<source src="resources/img/chrome.ogv"  type='video/ogg; codecs="theora, vorbis"' /> 
+				Your browser does not support the video tag
+				<!-- 이곳에 실버라이트 Object를 넣으시면 HTML5 Video테그를 지원하지 않는 브라우저에서는 실버라이트가 작동합니다 -->
+			</video>
+			<div id="videoText" style="position:absolute; display:none; left:92px; top:80px; width:540px; height:269px; margin:0 0 -100px 0;  opacity:0.0;">
+			  <canvas id="myCanvas" width="540" height="269" style="border: 0px"></canvas>
+			  
+			  <script type="text/javascript">
+			    var canvas = document.getElementById('myCanvas');
+			    var ctx = canvas.getContext('2d');
+			    
+		    	// 우측 상단 로고의 화이트 배경 (397,5,136,27,5)
+		    	// ???
+		    	// ???
+		    	// ???
+		    	
+		    	// 우측 상단 로고의 텍스트 (403,25)
+		    	// ???
+		    	ctx.font="12pt daum";
+		    	ctx.fillStyle = "black";
+		    	// ???
+		    	// ???
+		    	
+		    	// 하단의 Blue Bar (0, 230, 540, 40)
+		    	// ???
+		    	ctx.fillStyle = "#AAAAFF";
+		    	// ??? 
+		    	// ???
+		    	
+		    	// 하단의 Blue Bar Text (0, 230, 540, 40)
+		    	//ctx.beginPath();
+		    	ctx.font="12pt daum";
+		    	ctx.fillStyle = "black";
+		    	// ???
+		    	// ???
+		    
+		    function btn(color) {
+		    	// 우측 상단 로고를 배경 (397,5,136,27)
+		    	ctx.fillStyle = color;
+		    	roundedRect(ctx, 397,5,136,27,5);
+		    	ctx.fill();
+		    	
+		    	// 글씨 다시 쓰기
+		    	ctx.beginPath();
+		    	ctx.font="12pt daum";
+		    	ctx.fillStyle = "black";
+		    	ctx.fillText(color,403,25);
+		    	ctx.stroke();
+		    	
+		    	// 하단의 Blue Bar
+		    	ctx.beginPath();
+		    	ctx.fillStyle = "#AAAAFF";
+		    	ctx.fillRect(0, 230, 540, 40);
+		    	ctx.fill();
+		    	
+		    	// 하단의 Blue Bar Text
+		    	ctx.beginPath();
+		    	ctx.font="12pt daum";
+		    	ctx.fillStyle = "black";
+		    	ctx.fillText(color,380,260);
+		    	ctx.stroke();
+		    }
+		    	
+		    // 모서리가 둥근 사각형
+		    function roundedRect(ctx,x,y,width,height,radius){
+		    	  ctx.beginPath();
+		    	  ctx.moveTo(x,y+radius);
+		    	  ctx.lineTo(x,y+height-radius);
+		    	  ctx.quadraticCurveTo(x,y+height,x+radius,y+height);
+		    	  ctx.lineTo(x+width-radius,y+height);
+		    	  ctx.quadraticCurveTo(x+width,y+height,x+width,y+height-radius);
+		    	  ctx.lineTo(x+width,y+radius);
+		    	  ctx.quadraticCurveTo(x+width,y,x+width-radius,y);
+		    	  ctx.lineTo(x+radius,y);
+		    	  ctx.quadraticCurveTo(x,y,x,y+radius);
+		    	  //ctx.stroke();
+		    	}
+			  </script>
+			</div>			
+			<br/>
+			<input type=button value=Play onClick="playBtn();">
+			<input type=button value=Pause onClick="pauseBtn();">
+			<input type=button value=Stop onClick="stopBtn();">
+			<input type=button value=SkipBack onClick="skipBackBtn();">
+			<br/>
+			<input type="button" value="Yellow" onClick="btn('Yellow');">
+			<input type="button" value="White" onClick="btn('White');">
+			<input type="button" value="Green" onClick="btn('Green');">
+    </article>
+  </section>
+</body>
+</html>

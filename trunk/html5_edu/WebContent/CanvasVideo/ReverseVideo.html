@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<title>HTML5</title>
+  <style type="text/css">
+    /**************** Default CSS ********************/
+    body { background-color: white; padding: 20px; }
+    section {  border: 4px solid #AAA; width: 600px; text-align: center; padding: 30px;  box-shadow:7px 5px 11px #aaa;}
+    article { font-size: 30px; }
+    /**************** Default CSS ********************/
+
+    /******* HTML5 CSS3 Example ******
+    article { text-shadow:2px 2px 2px #ccc; }**/
+  </style>
+  <script>
+  document.addEventListener('DOMContentLoaded', function(){
+	    var v = document.getElementById('v');
+	    var canvas = document.getElementById('c');
+	    var context = canvas.getContext('2d');
+	    var back = document.createElement('canvas');
+	    var backcontext = back.getContext('2d');
+
+	    var cw,ch;
+
+	    v.addEventListener('play', function(){
+	        cw = v.clientWidth;
+	        ch = v.clientHeight;
+	        canvas.width = cw;
+	        canvas.height = ch;
+	        back.width = cw;
+	        back.height = ch;
+	        draw(v,context,backcontext,cw,ch, canvas);
+	    },false);
+
+	},false);
+
+	function draw(v,c,bc,w,h, canvas) {
+	    if(v.paused || v.ended) {
+	    	//alert(img);
+	    var img     = canvas.toDataURL("image/png");
+	      var span = document.createElement('span');
+	      span.innerHTML = ['<img class="images" src="', img,'"/>'].join('');
+	      document.getElementById('thumbs').insertBefore(span, null);
+	    	return false;
+	    }
+	    // First, draw it into the backing canvas
+	    bc.drawImage(v,0,0,w,h);
+	    // Grab the pixel data from the backing canvas
+	    var idata = bc.getImageData(0,0,w,h);
+	    var data = idata.data;
+	    // Loop through the pixels, turning them grayscale
+	    for(var i = 0; i < data.length; i+=4) {
+	        var r = 255-data[i];
+	        var g = 255-data[i+1];
+	        var b = 255-data[i+2];
+	        var brightness = (3*r+4*g+b)>>>3;
+	        data[i] = brightness;
+	        data[i+1] = brightness;
+	        data[i+2] = brightness;
+	    }
+	    idata.data = data;
+	    // Draw the pixels onto the visible canvas
+	    c.putImageData(idata,0,0);
+	    // Start over!
+	    setTimeout(function(){ draw(v,c,bc,w,h); }, 0);
+	}
+  </script>
+</head>
+<body>
+
+	<header>
+      <div style="text-shadow:3px 2px 3px #888;">
+        HTML5 : Video and CSS3.
+      </div>
+	</header>
+
+  <section>
+    <article>					        	
+			<video width="540" height=300 id="v" controls poster="resources/img/poster1.png"> 
+				<source src="resources/img/chrome.webm" type='video/webm; codecs="vp8, vorbis"' /> 
+				<source src="resources/img/chrome.mp4"  type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' /> 
+				<source src="resources/img/chrome.ogv"  type='video/ogg; codecs="theora, vorbis"' /> 
+				Your browser does not support the video tag
+				<!-- 이곳에 실버라이트 Object를 넣으시면 HTML5 Video테그를 지원하지 않는 브라우저에서는 실버라이트가 작동합니다 -->
+			</video>
+			<canvas id=c width="540" height=300></canvas>
+			<output id="thumbs"></output> 
+    </article>
+  </section>
+</body>
+</html>

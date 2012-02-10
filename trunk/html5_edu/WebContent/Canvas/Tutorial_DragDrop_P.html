@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<script src="resources/js/kinetic-v1.0.0.js">
+</script>
+<script>
+ 
+    var canvas = null; // canvas DOM object
+    var context = null; // canvas context
+    var eventDisplay = "";
+    var rectX = 0;
+    var rectY = 0;
+    var draggingRect = false;
+    var draggingRectOffsetX = 0;
+    var draggingRectOffsetY = 0;
+    var darthVaderImg = null;
+    var myStage = null;
+ 
+    function drawEventDisplay(){
+        context.font = "18pt Calibri";
+        context.fillStyle = "black";
+        context.fillText(eventDisplay, 10, 25);
+    }
+ 
+    function drawImage(){
+        canvas = document.getElementById("myCanvas");
+        context = canvas.getContext("2d");
+ 
+        rectX = canvas.width / 2 - 200 / 2;
+        rectY = canvas.height / 2 - 137 / 2 + 10;
+ 
+        myStage = new Kinetic.Stage(canvas);
+ 
+        myStage.setDrawStage(function(){
+            var mousePos = myStage.getMousePos();
+ 
+            if (draggingRect) {
+                rectX = mousePos.x - draggingRectOffsetX;
+                rectY = mousePos.y - draggingRectOffsetY;
+            }
+ 
+            drawEventDisplay();
+ 
+            myStage.beginRegion();
+ 
+            context.drawImage(darthVaderImg, rectX, rectY, 200, 137);
+            // draw rectangular region for image
+            context.beginPath();
+            context.rect(rectX, rectY, 200, 137);
+            context.closePath();
+ 
+ 
+						myStage.addRegionEventListener("onmousedown", function(){
+						    draggingRect = true;
+						    var mousePos = myStage.getMousePos();
+						
+						    draggingRectOffsetX = mousePos.x - rectX;
+						    draggingRectOffsetY = mousePos.y - rectY;
+						});
+						myStage.addRegionEventListener("onmouseup", function(){
+						    draggingRect = false;
+						});
+						myStage.addRegionEventListener("onmouseover", function(){
+						    document.body.style.cursor = "pointer";
+						});
+						myStage.addRegionEventListener("onmouseout", function(){
+						    document.body.style.cursor = "default";
+						});
+ 
+            myStage.closeRegion();
+        });
+ 
+        eventDisplay = "Drag and drop the image...";
+        drawEventDisplay();
+    }
+ 
+    window.onload = function(){
+        canvas = document.getElementById("myCanvas");
+        context = canvas.getContext("2d");
+ 
+        // load images
+        darthVaderImg = new Image();
+        darthVaderImg.onload = function(){
+            drawImage();
+        }
+        darthVaderImg.src = "resources/img/Tulips.jpg";
+    }
+ 
+</script>
+</head>
+<body>
+  <canvas id="myCanvas" width="600" height="400"></canvas>
+</body>
+</html>

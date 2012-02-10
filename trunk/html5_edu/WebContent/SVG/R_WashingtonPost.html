@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="resources/js/raphael-min.js"></script>
+<script type="text/javascript">
+	function init(){
+		var r = Raphael("notepad", 600, 500);
+		
+		var c1 = r.circle(100, 100, 40).attr({stroke: "#f00", "stroke-width": 5});
+		var r1 = r.rect(30, 90, 140, 25, 3).attr({stroke: "#bbb", "stroke-width": 1, fill: "white"});
+		var t1 = r.text(100,103,"General Mo...").attr({'font-size': 19, 'text-anchor': 'middle'}); // text-anchor: start/middle/end
+		
+		var c2 = r.circle(160, 180, 40).attr({stroke: "#f00", "stroke-width": 5});
+		var r2 = r.rect(90, 170, 140, 25, 3).attr({stroke: "#bbb", "stroke-width": 1, fill: "white"});
+		var t2 = r.text(160,183,"한글").attr({'font-size': 19, 'text-anchor': 'middle'}); // text-anchor: start/middle/end
+		
+		var c3 = r.circle(300, 230, 40).attr({stroke: "#8cceff", "stroke-width": 5});
+		var r3 = r.rect(230, 220, 140, 25, 3).attr({stroke: "#bbb", "stroke-width": 1, fill: "white"});
+		var t3 = r.text(300,233,"Washington").attr({'font-size': 19, 'text-anchor': 'middle'}); // text-anchor: start/middle/end
+		
+		var c4 = r.circle(440, 180, 40).attr({stroke: "#f00", "stroke-width": 5});
+		var r4 = r.rect(370, 170, 140, 25, 3).attr({stroke: "#bbb", "stroke-width": 1, fill: "white"});
+		var t4 = r.text(440,183,"GOP").attr({'font-size': 19, 'text-anchor': 'middle'}); // text-anchor: start/middle/end
+		
+		var c5 = r.circle(500, 100, 40).attr({stroke: "#f00", "stroke-width": 5});
+		var r5 = r.rect(430, 90, 140, 25, 3).attr({stroke: "#bbb", "stroke-width": 1, fill: "white"});
+		var t5 = r.text(500,103,"Congress").attr({'font-size': 19, 'text-anchor': 'middle'}); // text-anchor: start/middle/end
+		
+		var c0 = r.circle(300, 100, 65).attr({stroke: "#beda44", "stroke-width": 5}).attr({fill: "#edfdae"});
+		var r0 = r.rect(230, 90, 140, 25, 3).attr({stroke: "#bbb", "stroke-width": 1, fill: "white"});
+		var t0 = r.text(300,103,"Raphael").attr({'font-size': 19, 'text-anchor': 'middle'}); // text-anchor: start/middle/end
+		
+		var l1 = r.path("M170 103 L230 103").attr({stroke: "#feb150", "stroke-width": 7});
+		var l2 = r.path("M197 160 L242 134").attr({stroke: "#feb150", "stroke-width": 7});
+		var l3 = r.path("M300 188 L300 167").attr({stroke: "#feb150", "stroke-width": 7});
+		var l4 = r.path("M403 160 L358 134").attr({stroke: "#feb150", "stroke-width": 7});
+		var l5 = r.path("M430 103 L370 103").attr({stroke: "#feb150", "stroke-width": 7});
+	}
+</script>
+</head>
+<body onLoad="javascript:init();">
+<div id="notepad">
+
+</div>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Gallery</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			font: 14px/16px Helvetica;
+			background-image: url(resources/img/iphone_background.png);
+		}
+		.content {
+			width: 100%;
+		}
+		
+		/* ul 테그 점 제거 */
+		#gallery ul {
+			list-style: none;
+		}
+		
+		/* 캡션 글자  */
+		#gallery figcaption {
+			width: 100px;
+			margin: 0;
+			font: bold 10pt/9pt Helvetica;
+			color: #333;
+			text-shadow: 0 1px 0 #FFF;		 /* 캡션 글자 그림자 */
+		}
+		
+		/* 이미지 모서리 둥글게 */
+		#gallery figure img {
+			-webkit-border-radius: 10px;
+		}
+		
+		/* 이미지 배열 */
+		#gallery ul li {
+			width: 120px;
+			height: 130px;
+			padding: 0;
+			float: left;
+		}
+		
+		#gallery {
+			z-index: 10;
+			position: absolute;
+		}
+		
+		/* 검정색 커버 */
+		#coverDiv {
+			background-color: black;
+			height: 100%;
+			width: 100%;
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index: 5;
+			opacity: 0;
+			-webkit-transition: all 500ms ease-out; /* 서서히 변화하기 */
+			-webkit-perspective: 200; /* 깊이감(Z축 변화를 표시하기 위한) */
+		}
+		
+		/* 검정커버 : 나타날 때 */
+		#coverDiv.fadein {
+			opacity: 1;
+			z-index: 30;
+		}
+		
+		/* 검정커버 : 사라질 때 */
+		#coverDiv.fadeout {
+			opacity: 0;
+			z-index: 5;
+		}
+		
+		/* 확대 이미지 */
+		#coverDiv img {
+			opacity: 0;
+			-webkit-transform:  translateZ(-1000px) rotateY(180deg) translateZ(1000px);
+			-webkit-transition: all 1000ms ease-out;
+		}
+		
+		/* 확대 이미지 : 나타날 때 */
+		#coverDiv img.showit {
+			opacity: 1;
+			-webkit-transform: translateZ(0) rotateY(0deg) translateZ(0);
+		}
+		
+		/* 확대 이미지 : 사라질 때 */
+		#coverDiv img.hideit {
+			opacity: 0;
+			-webkit-transform-origin: center left;
+			-webkit-transform: scale(.1) rotateY(-90deg) translateZ(1000px);
+		}
+	</style>
+	<script>
+	  function showImage(img) {
+	    
+	    var bigsrc = img.getAttribute('bigsrc'); // 해상도 높은 이미지의  URL
+	    var coverDiv = document.getElementById('coverDiv'); // 검정색 커버
+	
+	    var newimage = document.createElement('img');	//  <img> 테그 생성
+	    newimage.src = bigsrc; // 생성된 <img> 테그의 src 속성 정의
+	
+	    coverDiv.appendChild(newimage); // 생성된 <img> 테그를 커버에 붙인다
+	
+	    window.setTimeout(function() { // 시간차를 두고 실행 (0.1초)
+	      newimage.className = "showit";
+	    }, 100);
+	    
+	  	//검정 커버를 나타나게 한다
+	    document.getElementById('coverDiv').className = 'fadein';
+	
+	 		// 검정 커버를 클릭 시 실행할  function()
+	    document.getElementById('coverDiv').onclick = function() {
+	      document.getElementById('coverDiv').className = 'fadeout'; // 커버 사라지도록
+	      newimage.className = "hideit"; // 커버의 이미지 사라지도록
+	      window.setTimeout(function() { // 시간차 두고 실행 (0.5초)
+	        coverDiv.removeChild(newimage); // 커버의 이미지 삭제 
+	      }, 500);
+	    }
+	  }
+	</script>
+</head>
+<body>
+	<section class="content" id="gallery">
+		<ul class="thumbnails">
+			<li>
+				<figure>
+					<img src="resources/img/p1_small.jpg" bigsrc="resources/img/p1.jpg" onclick="showImage(this);" >
+					<figcaption>Gallery Img1</figcaption>
+				</figure>
+			</li>
+			<li>
+				<figure>
+					<img src="resources/img/p2_small.jpg" bigsrc="resources/img/p2.jpg" onclick="showImage(this);">
+					<figcaption>Gallery Img2</figcaption>
+				</figure>
+			</li>
+			<li>
+				<figure>
+					<img src="resources/img/p3_small.jpg" bigsrc="resources/img/p3.jpg" onclick="showImage(this);">
+					<figcaption>Gallery Img3</figcaption>
+				</figure>
+			</li>
+			<li>
+				<figure>
+					<img src="resources/img/p4_small.jpg" bigsrc="resources/img/p4.jpg" onclick="showImage(this);">
+					<figcaption>Gallery Img4</figcaption>
+				</figure>
+			</li>
+		</ul>
+	</section>
+	
+	<!-- 검정 커버 -->
+	<div id="coverDiv"></div>
+	
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<script>
+ 
+window.onload = function() {
+  var canvas=document.getElementById("myCanvas");
+  var context=canvas.getContext("2d");
+ 
+	var destX = 50;
+	var destY = 130; 
+	var destWidth = 200;
+	var destHeight = 137;
+	
+	var imageObj = new Image();
+	imageObj.onload = function() {
+	  context.drawImage(imageObj,destX,destY,destWidth,destHeight);
+	}
+	imageObj.src = "resources/img/Tulips.jpg";
+}
+ 
+</script>
+</head>
+<body>
+  <canvas id="myCanvas" width="600" height="400"></canvas>
+</body>
+</html>

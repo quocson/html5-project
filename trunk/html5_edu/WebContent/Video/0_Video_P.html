@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<title>HTML5</title>
+  <style type="text/css">
+    /**************** Default CSS ********************/
+    body { background-color: white; padding: 20px; }
+    section {  border: 4px solid #AAA; width: 600px; text-align: center; padding: 30px;  box-shadow:7px 5px 11px #aaa;}
+    article { font-size: 30px; }
+    /**************** Default CSS ********************/
+
+    /******* HTML5 CSS3 Example ******
+    article { text-shadow:2px 2px 2px #ccc; }**/
+  </style>
+  <script>
+  	var video;
+  	
+    function init() {
+    	video = document.getElementById("video");
+  	}
+  	
+    // ???
+
+  </script>
+  
+</head>
+<body onload="init();">
+
+	<header>
+      <div style="text-shadow:3px 2px 3px #888;">
+        HTML5 : Video
+      </div>
+	</header>
+
+  <section>
+    <article>
+    		<video id="myVideo" width=540 height=300 controls poster="resources/img/poster1.png" >
+    			<source src="resources/img/chrome.webm" type='video/webm' /> 
+				<source src="resources/img/chrome.mp4"  type='video/mp4' /> 
+				<source src="resources/img/chrome.ogv"  type='video/ogg' /> 
+    		</video>
+    		<br/>
+    		<input type=button value=Play onClick="playBtn();">
+    		<input type=button value=Pause onClick="pauseBtn();">
+    		<input type=button value=Stop onClick="stopBtn();">
+    		<input type=button value=SkipBack onClick="skipBackBtn();">
+    </article>
+  </section>
+</body>
+</html>

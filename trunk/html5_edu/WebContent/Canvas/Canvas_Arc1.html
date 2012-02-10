@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head></head>
+<body>
+  <canvas id="myCanvas" width="400" height="300" style="border: 1px solid #333;"></canvas>
+  
+  <script type="text/javascript">
+    var canvas = document.getElementById('myCanvas');
+    var ctx = canvas.getContext('2d');
+
+    var centerX = 288;
+    var centerY = 160; 
+    var radius= 75;
+    var startingAngle = 1.1 * Math.PI;
+    var endingAngle = 1.9 * Math.PI;
+    var counterclockwise = false;
+    
+    ctx.beginPath();
+    ctx.arc(centerX,centerY,75,0,2*Math.PI,true);
+    ctx.fillStyle="gray";
+    ctx.fill();
+ 
+    ctx.beginPath();
+    ctx.arc(centerX,centerY, radius, startingAngle, 
+      endingAngle,counterclockwise);
+    ctx.lineWidth=15;
+    ctx.strokeStyle="black";
+    ctx.stroke();
+    
+  </script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+			<script>
+					 // 5초마다 새로운 글이 있는가 확인한다
+					 setInterval( 'checkCount()',5 * 1000 );
+				}
+				
+				var prevCount;	// 현재 화면에 표시된 글의 개수 
+				var newCount;		// DB 의 글 개수.  prevCount 값과 차이가 하면 "새로운 글이 있습니다." 를 표시하는데 사용된다 
+				
+				// DB에 새로운 글이 있는지 체크한다 
+				function checkCount() {
+					// 현재 화면에 표시된 글을 개수 
+					prevCount = document.getElementsByName('bbs').length;
+					
+			    db.transaction(function(tx) {
+			    		// DB의 글 개수를 구해온다 
+				      tx.executeSql("select count(1) as cnt from bbsTable", [], function(tx, results) {
+				        newCount = results.rows.item(0).cnt;
+				        
+				        // DB에 더 많은 글이 있는 경우 
+								if( newCount > prevCount)
+									displayNewMsg();	// 화면에 "새로운 글이 있습니다."를 표시한다 
+				      });
+				  });
+				}
+
+				// 화면에 "새로운 글이 있습니다."를 표시한다 
+				function displayNewMsg() {
+					var text = '<div class="h2_cont" style="border-top: 0px; margin: 10px 0 10px 0" name="bbs" id=newMsg>';
+					    text += '<h3 style="padding: 5px 0 5px 5px">  <a onClick="getNewMsg();">새로온 메세지가 있습니다.</a> </h3></div>';
+					var textHide = $(text).hide();
+					textHide.prependTo($('#services')).slideDown();
+				}
+
+				// 새로운 글을 조회하여 화면에 표시한다.(제목.내용 모두)
+				function getNewMsg() {
+			    html = "";
+			    db.transaction(function(tx) {
+			    	//  bbsTable  조
+			      tx.executeSql("select * from bbsTable", [], function(tx, results) {
+			    	  
+			    	  // 현재 화면에 표시된 것의 다음 순번부터 글을 표시한다
+			        for (var i=prevCount; i<results.rows.length; i++) {
+			          var record = results.rows.item(i);
+			            
+			      	 	html += '<div class="h2_cont" style="border-top: 0px; margin: 10px 0 10px 0"  name="bbs">';
+			      	 	html += '<h3 style="padding: 5px 0 5px 5px">';
+			      	 	html += record.user_name + ' : ' + record.title;
+			      	 	html += '</h3>';
+			      	 	html += record.content + ' - ' + record.create_date + " <button id='"+record.id+"' class='remove' onClick='recordsOnClick(this)';>x</button> ";
+			      	 	html += '</div>';
+			        }
+			    	  
+			    	  // 글을 화면에 추가한다. ( Slide Down  효과와 함께 )
+			        var htmlHide = $(html).hide();
+			        $('#newMsg').slideDown().hide();
+			        htmlHide.prependTo($('#services')).slideDown();
+			      });
+			    });
+				}
+				
+				
+				// 새로운 글의 저장
+				function save() {
+					db.transaction(function(tx) {
+						
+				    tx.executeSql(
+				        "insert into bbsTable (title, user_name, create_date, content) "
+				      + "values (?,?,?,?)", [$_("#title").value, $_("#userName").value, $_("#createDate").value, $_("#content").value],
+				      null, logger
+				    );
+				    showRecords();	//  Table 값을 모두 출력한다 
+				  });
+				};
+				
+				// 선택된 글의 삭제 
+			  function recordsOnClick(o) {
+					
+					// 지우기 버튼여부 확인 
+			    if (o.className!="remove") return;
+			    
+			    var recordID = o.id;
+			    db.transaction(function(tx) {
+			    	// 선택된 게시물 삭제
+			      tx.executeSql("delete from bbsTable where id=?", [recordID], null, logger);
+			      showRecords();
+			    });
+			  }
+				
+				// 모든 게시물을 화면에 표시 한다. 
+				function showRecords() {
+			    html = "";
+			    db.transaction(function(tx) {
+			      tx.executeSql("select * from bbsTable order by id desc", [], function(tx, results) {
+			        for (var i=0; i<results.rows.length; i++) {
+			          var record = results.rows.item(i);
+			            
+			      	 	html += '<div class="h2_cont" style="border-top: 0px; margin: 10px 0 10px 0"  name="bbs">';
+			      	 	html += '<h3 style="padding: 5px 0 5px 5px">';
+			      	 	html += record.user_name + ' : ' + record.title;
+			      	 	html += '</h3>';
+			      	 	html += record.content + ' - ' + record.create_date + " <button id='"+record.id+"' class='remove' onClick='recordsOnClick(this)';>x</button> ";
+			      	 	html += '</div>';
+			        }
+			        $_("#records").innerHTML = html;
+			      });
+			    });
+			  }
+				
+			</script> 

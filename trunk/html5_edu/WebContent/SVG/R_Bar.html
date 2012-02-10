@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="resources/js/raphael-min.js"></script>
+<script type="text/javascript">
+	function init(){
+		
+		var r = Raphael("notepad", 600, 400);
+		
+		var bar = r.rect(80,200,120,30).attr({stroke: "#beda44","stroke-width": 5, fill: "#edfdae"});
+		var label = r.text(140,180,30).attr({fill: "#000",'font-size': 19});
+		
+		
+		/* 주석 : 안좋은 예 
+		bar.animate({y: 100, height: 130},2000,">");
+		label.animateWith(bar, {y: 80},2000,">",function(){
+			label.attr({text: 130});
+		});
+		/**/
+
+		/* 주석 : 좋은 예 */
+		r.customAttributes.value = function(val) {
+			return {text: Math.round(val)}; // Round
+		};
+		bar.animate({y: 100, height: 130},2000,">");
+		label.attr({value:30}).animateWith(bar, {y:80,value: 130}, 2000, ">");
+		/**/
+
+		
+		
+	}
+</script>
+</head>
+<body onLoad="javascript:init();">
+<div id="notepad">
+
+</div>
+</body>
+</html>

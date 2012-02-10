@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>html5_edu</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>SSEServlet</display-name>
+    <servlet-name>SSEServlet</servlet-name>
+    <servlet-class>kr.w3labs.util.SSEServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SSEServlet</servlet-name>
+    <url-pattern>/SSEServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DragNDropFileUploaderSvl</display-name>
+    <servlet-name>DragNDropFileUploaderSvl</servlet-name>
+    <servlet-class>kr.w3labs.util.DragNDropFileUploaderSvl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DragNDropFileUploaderSvl</servlet-name>
+    <url-pattern>/DragNDropFileUploaderSvl</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>FileUploader</display-name>
+    <servlet-name>FileUploader</servlet-name>
+    <servlet-class>kr.w3labs.util.FileUploader</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FileUploader</servlet-name>
+    <url-pattern>/FileUploader</url-pattern>
+  </servlet-mapping>
+</web-app>
