@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<script src="resources/js/kinetic-v1.0.0.js">
+</script>
+<script>
+function Rectangle(x, y, width, height, borderWidth){
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+    this.borderWidth = borderWidth;
+}
+
+window.onload = function(){
+    var canvas = document.getElementById("myCanvas");
+    // instantiate new animation object
+    var myStage = new Kinetic.Stage(canvas, 100);
+
+		var amplitude = 150;
+		var centerX = 0;
+		var period = 2000; // in ms
+		var myRectangle = new Rectangle(250, 70, 100, 50, 5);
+		centerX = canvas.width / 2 - myRectangle.width / 2;
+		
+		// set updateStage method
+		myStage.setUpdateStage(function(){
+		    var nextX = amplitude *
+		    Math.sin(myStage.getTime() *
+		    2 *
+		    Math.PI /
+		    period) +
+		    centerX;
+		    myRectangle.x = nextX;
+		});
+    // set drawStage method
+    myStage.setDrawStage(function(){
+        var context = myStage.getContext();
+        context.beginPath();
+        context.rect(myRectangle.x, myRectangle.y, myRectangle.width, myRectangle.height);
+        context.fillStyle = "#8ED6FF";
+        context.fill();
+        context.lineWidth = myRectangle.borderWidth;
+        context.strokeStyle = "black";
+        context.stroke();
+    });
+    // start animation
+    myStage.start();
+}
+</script>
+</head>
+<body>
+  <canvas id="myCanvas" width="600" height="400"></canvas>
+</body>
+</html>

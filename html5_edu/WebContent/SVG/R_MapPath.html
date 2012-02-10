@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>MapPath</title>
+<script type="text/javascript" src="resources/js/raphael-min.js"></script>
+<script type="text/javascript">
+	function init(){
+		var r = Raphael("notepad", 1000, 800);
+
+		// 이미지
+		var img = r.image("resources/img/map2.png", -40,-30,605,723);
+		
+		// Path
+		var pathString = "M120,428c6.468,0.863,11.406-3.608,17.147-5.246c6.599-1.881,13.371-2.048,19.65-4.654c1.145,9.297,7.011,19.591,9.377,29c4.255,16.924,15.457,33.1,20.984,49.766c9.006-0.917,20.181-4.931,28.9-8.088c5.827-2.109,11.553-5.027,17.482-6.773c6.427-1.894,15.31-1.086,21.252-3.861c6.722-3.14,9.496-10.46,16.374-13.867c7.108-3.521,15.138-1.265,22.376-3.204c7.607-2.038,20.469-9.508,26.539-14.333c6.539-5.197,4.961-0.871,2.672-9.742c-2.148-8.328-5.072-17.688-7.486-26.412c-5.719-20.662-16.337-40.58-25.337-59.604c9.277-5.327,18.018-4.775,28.258-6.687c11.823-2.207,25.4-6.275,37.841-3.313c18.646,4.439,26.344,27.332,29.866,43.849c-4.686,0.633-9.289,1.884-13.896,3.171";
+		var p = r.path(pathString).attr({stroke: "#F00"});
+		
+		// 타원 그래픽
+    var e = r.ellipse(120,428, 10, 6).attr({stroke: "none", fill: "#f00"});
+    e.animateAlong(pathString, 6000, true, null);
+	}
+	
+</script>
+</head>
+<body onLoad="javascript:init();">
+
+<div id="notepad" style="position: absolute;">
+</div>
+</body>
+</html>

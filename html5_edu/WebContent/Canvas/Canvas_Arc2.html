@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head></head>
+<body>
+  <canvas id="myCanvas" width="400" height="300" style="border: 1px solid #333;"></canvas>
+  
+  <script type="text/javascript">
+    var canvas = document.getElementById('myCanvas');
+    var ctx = canvas.getContext('2d');
+
+	  var centerX = 288;
+	  var centerY = 160;
+	  var radius= 75;
+	  var startingAngle = 0.9 * Math.PI;
+	  var endingAngle = 0.1 * Math.PI;
+	  var counterclockwise = true;
+	  
+    // È¸»ö ¿ø
+	  ctx.beginPath();
+	  ctx.arc(centerX,centerY,70,0,2*Math.PI,true);
+	  ctx.fillStyle="gray"; // line color
+	  ctx.fill();
+	  
+    // ¿ÞÂÊ´«
+ 		ctx.beginPath();
+	  ctx.arc(centerX-25,centerY-20, 10, 0, 
+		  2*Math.PI,counterclockwise);
+	  ctx.fillStyle="white";
+	  ctx.fill();
+ 
+    // ¿À¸¥ÂÊ´«
+ 		ctx.beginPath();
+	  ctx.arc(centerX+25,centerY-20, 10, 0, 
+		  2*Math.PI,counterclockwise);
+	  ctx.fillStyle="white";
+	  ctx.fill();
+ 
+    // ÀÔ¸ð¾ç 
+ 		ctx.beginPath();
+	  ctx.arc(centerX,centerY, radius-30, startingAngle, 
+		  endingAngle,counterclockwise);
+	  ctx.lineWidth=5;
+	  ctx.strokeStyle="black";
+	  ctx.stroke();
+	  
+
+    
+  </script>
+</body>
+</html>

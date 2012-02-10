@@ -1,0 +1,105 @@
+<html lang="en">
+<head>
+      <!-- Meta -->
+			<meta http-equiv="Content-Type" content="text/event-stream;charset=utf-8">
+      <title>W3Labs.kr</title>
+
+			<script> 
+				var db = window.openDatabase("bbsTable", "1.0", "bbsTable Description", 1024);
+				
+				function init() {
+				  if (!window.openDatabase) {
+					    status("Database not supported");
+					    return;
+					}
+				  
+					db.transaction(function(tx) {
+					   // tx.executeSql("drop table if exists bbsTable");
+					   tx.executeSql("create table if not exists bbsTable ("
+					     + "id integer primary key,"
+					     + "title text,"
+					     + "user_name text,"
+					     + "create_date text,"
+					     + "content text"
+					     + ")",null,null, logger);
+					   showRecords();
+					   console.log("doffo");
+					 });
+				}
+				
+				function status(status) {
+				  document.getElementById("status").innerHTML = status;
+				}
+				function logger(tx, error) {
+				  console.log("Error", error.message);
+				}
+				function logArguments() {
+				  console.log(arguments);
+				}
+				function $_(selector) {
+				  return document.querySelector(selector);
+				}
+				
+				function save() {
+					db.transaction(function(tx) {
+				    console.log("running2");
+				    tx.executeSql(
+				        "insert into bbsTable (title, user_name, create_date, content) "
+				      + "values (?,?,?,?)", [$_("#title").value, $_("#userName").value, $_("#createDate").value, $_("#content").value],
+				      null, logger
+				    );
+				    console.log("done");
+				    showRecords();
+				  });
+				};
+				
+			  function ageOnKeyUp(ev) {
+				    if (ev.keyCode==13) $_("#save").onclick();
+				};
+				 
+				
+			  function recordsOnClick(o) {
+			    if (o.className!="remove") return;
+			    var recordID = o.id;
+			    console.log(recordID);
+			    db.transaction(function(tx) {
+			      tx.executeSql("delete from bbsTable where id=?", [recordID], null, logger);
+			      showRecords();
+			    });
+			  }
+				
+				
+				function showRecords() {
+			    console.log("db", db);
+			    html = "";
+			    db.transaction(function(tx) {
+			      tx.executeSql("select * from bbsTable", [], function(tx, results) {
+			        for (var i=0; i<results.rows.length; i++) {
+			          var record = results.rows.item(i);
+			            
+			      	 	html += '<div class="h2_cont" style="border-top: 0px; margin: 10px 0 10px 0">';
+			      	 	html += '<h3 style="padding: 5px 0 5px 5px">';
+			      	 	html += record.user_name + ' : ' + record.title;
+			      	 	html += '</h3>';
+			      	 	html += record.content + ' - ' + record.create_date + " <button id='"+record.id+"' class='remove' onClick='recordsOnClick(this)';>x</button> ";
+			      	 	html += '</div>';
+			        }
+			        $_("#records").innerHTML = html;
+			      });
+			    });
+			    
+			  }
+				
+				function onMessageHandler(e) {
+					alert(event.data);
+				}
+			
+			</script> 
+      
+</head>
+<body>
+retry: 60000
+\n
+\n
+data: 2
+</body></html>

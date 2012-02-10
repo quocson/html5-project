@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="resources/js/raphael-min.js"></script>
+<script type="text/javascript">
+	function init(){
+		
+		var r = Raphael("notepad", 600, 400);
+		
+		var c1 = r.circle(50, 50, 40);
+		c1.attr({
+			stroke: "#beda44",
+			"stroke-width": 5,
+			fill: "#edfdae"
+		});
+		
+		var c2 = r.circle(200, 250, 40);
+		c2.attr({
+			stroke: "#beda44",
+			"stroke-width": 5,
+			fill: "#edfdae"
+		});
+		
+		var c3 = r.circle(400, 100, 40);
+		c3.attr({
+			stroke: "#beda44",
+			"stroke-width": 5,
+			fill: "#edfdae"
+		});
+		
+		var c0 = r.circle(50, 50, 40);
+		c0.attr({
+			stroke: "#beda44",
+			"stroke-width": 5,
+			fill: "#edfdae"
+		});
+		
+		//Here!!
+		c0.animate({
+			"25%": {cx: 200, cy: 250},
+			"50%": {cx: 270, cy: 100},
+			"75%": {cx: 320, cy: 200},
+			"100%":{cx: 400, cy: 100}
+		},4000);
+		
+		
+		/*
+		var c2 = r.circle(200, 250, 40);
+		c2.attr({
+			stroke: "#beda44",
+			"stroke-width": 5,
+			fill: "#edfdae"
+		});
+		
+		var c3 = r.circle(400, 100, 40);
+		c3.attr({
+			stroke: "#beda44",
+			"stroke-width": 5,
+			fill: "#edfdae"
+		});
+		
+		var c0 = r.circle(50, 50, 40);
+		c0.attr({
+			stroke: "#beda44",
+			"stroke-width": 5,
+			fill: "#edfdae"
+		});
+		*/
+		
+		/*
+		c0.animate({
+			cx: 200, cy: 250
+		}, 2000, function(){
+			c0.animate({
+				cx: 400, cy: 100
+			},2000, '<');
+		});
+		
+		
+		c0.animate({
+			"50%": {cx: 200, cy: 250},
+			"100%":{cx: 400, cy: 100}
+		},2000);
+		
+		
+		c0.animate({
+			"25%": {cx: 200, cy: 250},
+			"50%": {cx: 270, cy: 100},
+			"75%": {cx: 320, cy: 200},
+			"100%":{cx: 400, cy: 100}
+		},4000);
+		*/
+		
+		
+	}
+</script>
+</head>
+<body onLoad="javascript:init();">
+<div id="notepad">
+
+</div>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<title>HTML5</title>
+  <style type="text/css">
+    /**************** Default CSS ********************/
+    body { background-color: white; padding: 20px; }
+    section {  border: 4px solid #AAA; width: 600px; text-align: center; padding: 30px;  box-shadow:7px 5px 11px #aaa;}
+    article { font-size: 30px; }
+    /**************** Default CSS ********************/
+
+    /******* HTML5 CSS3 Example ******
+    article { text-shadow:2px 2px 2px #ccc; }**/
+  </style>
+  <script src="resources/js/jquery-1.5.2.min.js"></script>
+  <script>
+  	
+  	//???
+  	
+  	//???
+  	
+		function playBtn() {
+			document.getElementById("video").play();
+		}
+		
+		function pauseBtn() {
+			document.getElementById("video").pause();
+		}
+		
+		function stopBtn() {
+			document.getElementById("video").pause();
+			document.getElementById("video").currentTime = 0;
+		}
+		
+		function skipBackBtn() {
+			document.getElementById("video").currentTime -=2;
+		}
+
+  </script>
+</head>
+<body>
+
+	<header>
+      <div style="text-shadow:3px 2px 3px #888;">
+        HTML5 : Video and CSS3.
+      </div>
+	</header>
+
+  <section>
+    <article>					        	
+			<video width="540" height=300 id="video" controls poster="resources/img/poster1.png"
+				???> 
+				<source src="resources/img/chrome.webm" type='video/webm; codecs="vp8, vorbis"' /> 
+				<source src="resources/img/chrome.mp4"  type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' /> 
+				<source src="resources/img/chrome.ogv"  type='video/ogg; codecs="theora, vorbis"' /> 
+				Your browser does not support the video tag
+				<!-- 이곳에 실버라이트 Object를 넣으시면 HTML5 Video테그를 지원하지 않는 브라우저에서는 실버라이트가 작동합니다 -->
+			</video>
+			<br>
+			<input type=button value=Play onClick="playBtn();">
+			<input type=button value=Pause onClick="pauseBtn();">
+			<input type=button value=Stop onClick="stopBtn();">
+			<input type=button value=SkipBack onClick="skipBackBtn();">
+			<div id="videoText" style="position:absolute; display:none; left:92px; top:314px; width:540px; height:35px; margin:0 0 -100px 0; background:#f78600; opacity:0.8;">
+				<div style="color:white; text-align:right; padding-right:20px; font-style:italic;">
+					HTML5 : Video and CSS3
+				</div>
+			</div>
+    </article>
+  </section>
+</body>
+</html>

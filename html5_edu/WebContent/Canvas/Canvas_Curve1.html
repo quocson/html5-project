@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<script>
+ 
+window.onload = function() {
+  var canvas=document.getElementById("myCanvas");
+  var context=canvas.getContext("2d");
+ 
+	context.moveTo(188,150);
+	context.quadraticCurveTo(288, 0, 388, 150);
+	context.lineWidth=10;
+	context.strokeStyle="black"; // line color
+	context.stroke(); 
+}
+ 
+</script>
+</head>
+<body>
+  <canvas id="myCanvas" width="578" height="200"></canvas>
+</body>
+</html>

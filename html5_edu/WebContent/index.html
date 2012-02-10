@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+      <!-- Meta -->
+			<meta charset="UTF-8">
+      <title>W3Labs.kr</title>
+
+      <!--[if lt IE 9]>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+      <![endif]-->
+      
+      <!-- 공통 CSS -->
+      <link rel="stylesheet" href="resources/css/reset.css" media="all">
+      <link rel="stylesheet" href="resources/css/fonts.css" media="all">
+      <link rel="stylesheet" href="resources/css/style.css" media="all">
+      
+      <!-- Media Queries -->
+      <link rel="stylesheet" href="resources/css/10col.css" media="only screen and (min-width: 992px)">
+      <link rel="stylesheet" href="resources/css/8col.css" media="only screen and (min-width: 768px) and (max-width: 991px)">
+      <link rel="stylesheet" href="resources/css/3col.css" media="only screen and (max-width: 767px)">
+      <link rel="stylesheet" href="resources/css/5col.css" media="only screen and (min-width: 480px) and (max-width: 767px)">
+
+      <!-- 스마트폰 대응. 최대확대:3배까지 , 확대/축소:가능 -->
+      <meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=3.0; user-scalable=yes">
+      <!-- Add "maximum-scale=1.0, user-scalable=no" to fix the Mobile Safari auto-zoom bug on orientation changes, but keep in mind that it will disable user-zooming completely. Bad for accessibility. -->   
+     
+      <!-- 아이콘 16x16 -->
+      <link rel="shortcut icon" href="http://w3labs.kr/wp-content/uploads/2011/01/logo_temp.png" type="image/x-icon">
+      <link rel="icon" href="http://w3labs.kr/wp-content/uploads/2011/01/logo_temp.png" type="image/x-icon">
+      
+      <!-- 아이콘 Apple 144x144 -->
+      <link rel="apple-touch-icon" sizes="114x114" href="http://w3labs.kr/wp-content/uploads/2011/01/logo_temp.png"> 
+      
+      <!-- iOS에서 웹페이지를 [홈 화면에 추가] -->
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="apple-mobile-web-app-status-bar-style" content="black">
+      <link rel="apple-touch-startup-image" href="http://w3labs.kr/wp-content/uploads/2011/01/logo_temp.png">
+                   
+      <meta name="description" content="W3Labs.kr Demo & Samples Site">
+      <meta name="keywords" content="w3labs.kr html5 sencha touch phonegap">
+                 
+      <!-- Jquery -->
+      <script src="resources/js/jquery-1.6.1.min.js"></script>
+      
+      <script>
+      	function init() {
+      		// Menu1 값을 localStorage 값으로 대체
+      		if(localStorage.getItem("menu1"))
+      			menu1.innerHTML = localStorage.menu1;
+     		}
+     	
+				/*********** 메뉴 List Drag and Drop 소스 코드 시작 *****************/
+				function onDragStart( e, id ) {
+				      e.dataTransfer.effectAllowed = 'copy'; // only dropEffect='copy' will be dropable
+				      e.dataTransfer.setData('Text', id); // required otherwise doesn't work
+				}
+				function onDragEnter( e, o ) {
+					
+					// DragEnter 이벤트 :  height 커지도록.
+					$(o.parentNode).animate({
+					    height: "40"
+					  }, 300, function() {
+					    // Animation complete.
+					  });
+				  return false;
+				}
+				function onDragOver( e ) {
+				    if (e.preventDefault) e.preventDefault(); // allows us to drop
+				    e.dataTransfer.dropEffect = 'copy';
+				    return false;
+				}
+				function onDragLeave( e, o ) {
+					
+					// DragLeave 이벤트 :  height 작아지도록.
+					o.parentNode.style.backgroundColor="white";
+					$(o.parentNode).animate({
+					    height: "25"
+					  }, 300, function() {
+					    // Animation complete.
+					  });
+				  return false;
+				}
+				
+				function onDrop( e, o ) {
+				    if (e.stopPropagation) e.stopPropagation(); // stops the browser from redirecting...why???
+				    var el = document.getElementById(e.dataTransfer.getData('Text'));
+				    
+				    //alert( el.parentNode );
+				    
+				    // Drop 된 곳에 객체를 넣는다.
+				    o.parentNode.parentNode.insertBefore( el.parentNode, o.parentNode );
+						$(o.parentNode).animate({
+						    height: "25"
+						  }, 300, function() {
+						    // Animation complete.
+						  });
+				    
+						// li 태그앞에 circle 없어지는 버그 해결 코드
+				    $(o.parentNode).css("height", "25");
+				    $(o.parentNode).css("overflow-x", "");
+				    $(o.parentNode).css("overflow-y", "");
+		
+				    
+				    // Local Storage 에 화면의 html을 저장 한다 
+				    localStorage.setItem("menu1", $('#menu1').html());
+				    
+				    return false;
+				}
+				/*********** 메뉴 List Drag and Drop 소스 코드  *****************/
+      </script>
+      
+</head>
+<body onLoad="init();">
+	 <header id="top">
+         <h1>w3labs.kr <small>Demo <em>&amp;</em> Samples</small></h1>
+         <div id="say_hello">
+         	<p>say hello!</p>
+            <div id="hello">
+         		<a href="mailto:contact@w3labs.kr">contact@w3labs.kr</a>
+            	<a href="tel:+07075142739">070.7514.2739</a>
+            </div>
+         </div>
+     </header><!-- end #header -->
+      
+     <section id="bio">
+         <p class="hi third">Welcome to our Demo Site. This site designed by Resposive UI with Media Query. Try to resize your browser size. this site has 4-depth CSS.</p>         
+         <p class="third">안녕하세요. 이사이트는 Responsive design이 적용된 사이트 입니다. 보고계시는 브라우저의 사이즈를 조절해 보세요. 준비된 4가지의 CSS가 바뀌며 각기 다른 화면을 보여줍니다.</p>
+     </section><!-- end #bio -->
+     
+     
+     <section id="services">
+     	 <div class="h2_cont">
+         	<h2>Demo</h2>
+         </div>
+         
+	      <div class="third">
+	      	<h3><span>1.</span> Graphic</h3>
+	         <ul id=menu1>
+	             <li><a id=a1 href="Doctype/Doctype_Index.html" draggable=true onDragStart="onDragStart(event, this.id);" onDragEnter="onDragEnter(event, this);" onDragOver="onDragOver(event);" onDragLeave="onDragLeave(event, this);" onDrop="onDrop(event, this);" >Doctype & Tag</a></li>
+	             <li><a id=a2 href="Canvas/Canvas_Index.html" draggable=true onDragStart="onDragStart(event, this.id);" onDragEnter="onDragEnter(event, this);" onDragOver="onDragOver(event);" onDragLeave="onDragLeave(event, this);" onDrop="onDrop(event, this);" >Canvas</a></li>
+	             <li><a id=a3 href="Video/Video_Index.html" draggable=true onDragStart="onDragStart(event, this.id);" onDragEnter="onDragEnter(event, this);" onDragOver="onDragOver(event);" onDragLeave="onDragLeave(event, this);" onDrop="onDrop(event, this);" >Video</a></li>
+	             <li><a id=a4 href="CSS3/CSS3_Index.html" draggable=true onDragStart="onDragStart(event, this.id);" onDragEnter="onDragEnter(event, this);" onDragOver="onDragOver(event);" onDragLeave="onDragLeave(event, this);" onDrop="onDrop(event, this);" >CSS3</a></li>
+	             <li><a id=a5 href="WebStorage/WebStorage_Index.html" draggable=true onDragStart="onDragStart(event, this.id);" onDragEnter="onDragEnter(event, this);" onDragOver="onDragOver(event);" onDragLeave="onDragLeave(event, this);" onDrop="onDrop(event, this);" >Web Storage</a></li>
+	             <li><a id=a6 href="APIs/APIs_Index.html" draggable=true onDragStart="onDragStart(event, this.id);" onDragEnter="onDragEnter(event, this);" onDragOver="onDragOver(event);" onDragLeave="onDragLeave(event, this);" onDrop="onDrop(event, this);" >APIs</a></li>
+	             <li><a id=a7 href="jQM/jQM_Index.html" draggable=true onDragStart="onDragStart(event, this.id);" onDragEnter="onDragEnter(event, this);" onDragOver="onDragOver(event);" onDragLeave="onDragLeave(event, this);" onDrop="onDrop(event, this);" >jQuery Mobile</a></li>
+	             <li><a id=a7 href="sencha/index.html" draggable=true onDragStart="onDragStart(event, this.id);" onDragEnter="onDragEnter(event, this);" onDragOver="onDragOver(event);" onDragLeave="onDragLeave(event, this);" onDrop="onDrop(event, this);" >Sencha Touch</a></li>
+	             <li><a id=a8 href="SVG/SVG_Index.html" draggable=true onDragStart="onDragStart(event, this.id);" onDragEnter="onDragEnter(event, this);" onDragOver="onDragOver(event);" onDragLeave="onDragLeave(event, this);" onDrop="onDrop(event, this);" >SVG</a></li>
+	          </ul>
+	      </div>
+	
+	      <div class="third">
+	      	<h3><span>2.</span> JavaScript API</h3>
+	         <ul id=menu2>
+	             <li><a id=b1 href="#" draggable=true onDragStart="onDragStart(event, this.id);" onDragEnter="onDragEnter(event, this);" onDragOver="onDragOver(event);" onDragLeave="onDragLeave(event, this);" onDrop="onDrop(event, this);" >1</a></li>
+	             <li><a id=b2 href="#" draggable=true onDragStart="onDragStart(event, this.id);" onDragEnter="onDragEnter(event, this);" onDragOver="onDragOver(event);" onDragLeave="onDragLeave(event, this);" onDrop="onDrop(event, this);" >2</a></li>
+	             <li><a id=b3 href="#" draggable=true onDragStart="onDragStart(event, this.id);" onDragEnter="onDragEnter(event, this);" onDragOver="onDragOver(event);" onDragLeave="onDragLeave(event, this);" onDrop="onDrop(event, this);" >3</a></li>
+	             <li><a id=b4 href="#" draggable=true onDragStart="onDragStart(event, this.id);" onDragEnter="onDragEnter(event, this);" onDragOver="onDragOver(event);" onDragLeave="onDragLeave(event, this);" onDrop="onDrop(event, this);" >4</a></li>
+	             <li><a id=b5 href="#" draggable=true onDragStart="onDragStart(event, this.id);" onDragEnter="onDragEnter(event, this);" onDragOver="onDragOver(event);" onDragLeave="onDragLeave(event, this);" onDrop="onDrop(event, this);" >5</a></li>
+	             <li><a id=b6 href="#" draggable=true onDragStart="onDragStart(event, this.id);" onDragEnter="onDragEnter(event, this);" onDragOver="onDragOver(event);" onDragLeave="onDragLeave(event, this);" onDrop="onDrop(event, this);" >6</a></li>
+	          </ul>
+	      </div>
+	      <div class="third">
+	      	<h3><span>3.</span> CSS</h3>
+	         <ul id=menu3>
+	             <li><a id=c1 href="#" draggable=true onDragStart="onDragStart(event, this.id);" onDragEnter="onDragEnter(event, this);" onDragOver="onDragOver(event);" onDragLeave="onDragLeave(event, this);" onDrop="onDrop(event, this);" >1</a></li>
+	             <li><a id=c2 href="#" draggable=true onDragStart="onDragStart(event, this.id);" onDragEnter="onDragEnter(event, this);" onDragOver="onDragOver(event);" onDragLeave="onDragLeave(event, this);" onDrop="onDrop(event, this);" >2</a></li>
+	             <li><a id=c3 href="#" draggable=true onDragStart="onDragStart(event, this.id);" onDragEnter="onDragEnter(event, this);" onDragOver="onDragOver(event);" onDragLeave="onDragLeave(event, this);" onDrop="onDrop(event, this);" >3</a></li>
+	             <li><a id=c4 href="#" draggable=true onDragStart="onDragStart(event, this.id);" onDragEnter="onDragEnter(event, this);" onDragOver="onDragOver(event);" onDragLeave="onDragLeave(event, this);" onDrop="onDrop(event, this);" >4</a></li>
+	             <li><a id=c5 href="#" draggable=true onDragStart="onDragStart(event, this.id);" onDragEnter="onDragEnter(event, this);" onDragOver="onDragOver(event);" onDragLeave="onDragLeave(event, this);" onDrop="onDrop(event, this);" >5</a></li>
+	             <li><a id=c6 href="#" draggable=true onDragStart="onDragStart(event, this.id);" onDragEnter="onDragEnter(event, this);" onDragOver="onDragOver(event);" onDragLeave="onDragLeave(event, this);" onDrop="onDrop(event, this);" >6</a></li>
+	          </ul>
+	      </div>
+
+     </section><!-- end #services -->
+     
+     
+          
+          
+     <section id="clients">
+     	 <div class="h2_cont grid_12">
+         	<h2>Clients</h2>
+         </div>
+         <a href="http://www.elisava.net/" target="_blank"><img src="resources/img/elisava_logo.jpg" class="fourth" alt="ELISAVA"></a>
+         <a href="http://www.mariscal.com/" target="_blank"><img src="resources/img/mariscal_logo.jpg" class="fourth" alt="Estudio Mariscal"></a>
+         <a href="http://www.min.cult.cu/" target="_blank"><img src="resources/img/mincult_logo.jpg" class="fourth" alt="Ministerio de Cultura de Cuba"></a>
+         <a href="http://www.fodera.com/" target="_blank"><img src="resources/img/fodera_logo.jpg" class="fourth" alt="Fodera"></a>
+     </section><!-- end #clients -->
+     
+     
+     <section id="contact">
+     	 <div class="h2_cont grid_12">
+         	<h2>Contact</h2>
+         </div>
+         
+         <div class="fourth">
+         	<h3>Mail</h3>
+            <a href="mailto:contact@w3labs.kr">contact@w3labs.kr</a>
+            <h3 id="phone">Phone</h3>
+            <a href="tel:+07075142739">070.7514.2739</a>
+         </div>
+         
+         <div class="fourth">
+         	<h3>Follow me</h3>
+            <ul class="list">
+                <li><a href="http://twitter.com/w3labskr" target="_blank">twitter</a></li>
+                <li><a href="http://http://kr.linkedin.com/in/manyoung" target="_blank">linkedin</a></li>
+                <li><a href="http://www.facebook.com/jongkwang" target="_blank">facebook</a></li>
+                <li><a href="http://www.myspace.com/" target="_blank">myspace</a></li>
+                <li><a href="http://dribbble.com/" target="_blank">dribbble</a></li>
+            </ul>
+         </div>
+         
+         <div>
+         	<h3>My friends</h3>
+            <ul class="list fourth"> 
+               	<li><a href="http://www.albagcorral.com/" target="_blank">Alba G. Corral</a></li>
+                <li><a href="http://www.mariale.net/" target="_blank">Jorge Penny</a></li>
+                <li><a href="http://www.mariscal.com/" target="_blank">Javier Mariscal</a></li>
+                <li><a href="http://www.ivoserrano.com/" target="_blank">Ivan Serrano</a></li>
+                <li><a href="http://www.landermuruaga.com/" target="_blank">Lander Muruaga</a></li>
+            </ul>
+            <ul class="list fourth">
+                <li><a href="http://www.eleonoramajorana.com/" target="_blank">Eleonora Majorana</a></li>
+               	<li><a href="http://www.renatarodrigues.com/" target="_blank">Renata Rodrigues</a></li>
+                <li><a href="http://www.rodrigoronda.com/" target="_blank">Rodrigo Ronda</a></li>
+                <li><a href="http://dicepb.wordpress.com/" target="_blank">Jorge Batista</a></li>
+                <li><a href="http://www.luciawalter.com/" target="_blank">Lucía Walter</a></li>
+            </ul>
+         </div>
+         
+     </section><!-- end #contact -->
+	
+     
+     <footer>
+     	 
+         <a href="#top"><img src="resources/img/top.jpg" alt="back-to-top"></a>
+         <p>Built with HTML5, CSS3, Typekit &amp; Media Queries</p>
+         
+     </footer><!-- end #footer -->
+   
+</body></html>

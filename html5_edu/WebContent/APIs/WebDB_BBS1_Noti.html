@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+      <!-- Meta -->
+			<meta charset="UTF-8">
+      <title>W3Labs.kr</title>
+
+      <!--[if lt IE 9]>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+      <![endif]-->
+      
+      <!-- 공통 CSS -->
+      <link rel="stylesheet" href="../resources/css/reset.css" media="all">
+      <link rel="stylesheet" href="../resources/css/fonts.css" media="all">
+      <link rel="stylesheet" href="../resources/css/style.css" media="all">
+      
+      <!-- Media Queries -->
+      <link rel="stylesheet" href="../resources/css/10col.css" media="only screen and (min-width: 992px)">
+      <link rel="stylesheet" href="../resources/css/8col.css" media="only screen and (min-width: 768px) and (max-width: 991px)">
+      <link rel="stylesheet" href="../resources/css/3col.css" media="only screen and (max-width: 767px)">
+      <link rel="stylesheet" href="../resources/css/5col.css" media="only screen and (min-width: 480px) and (max-width: 767px)">
+
+      <!-- 스마트폰 대응. 최대확대:3배까지 , 확대/축소:가능 -->
+      <meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=3.0; user-scalable=yes">
+      <!-- Add "maximum-scale=1.0, user-scalable=no" to fix the Mobile Safari auto-zoom bug on orientation changes, but keep in mind that it will disable user-zooming completely. Bad for accessibility. -->   
+     
+      <!-- 아이콘 16x16 -->
+      <link rel="shortcut icon" href="http://w3labs.kr/wp-content/uploads/2011/01/logo_temp.png" type="image/x-icon">
+      <link rel="icon" href="http://w3labs.kr/wp-content/uploads/2011/01/logo_temp.png" type="image/x-icon">
+      
+      <!-- 아이콘 Apple 144x144 -->
+      <link rel="apple-touch-icon" sizes="114x114" href="http://w3labs.kr/wp-content/uploads/2011/01/logo_temp.png"> 
+      
+      <!-- iOS에서 웹페이지를 [홈 화면에 추가] -->
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="apple-mobile-web-app-status-bar-style" content="black">
+      <link rel="apple-touch-startup-image" href="http://w3labs.kr/wp-content/uploads/2011/01/logo_temp.png">
+                   
+      <meta name="description" content="W3Labs.kr Demo & Samples Site">
+      <meta name="keywords" content="w3labs.kr html5 sencha touch phonegap">
+                 
+      <!-- Jquery -->
+      <script src="../resources/js/jquery-1.6.1.min.js"></script>
+			<script>
+				// bbsTable 접근
+				var db = window.openDatabase("bbsTable", "1.0", "bbsTable Description", 1024);
+				
+				// html  로딩되면 처음 실행되는 부분.
+				// Table 이 없으면  Table 을 생성한다 
+				function init() {
+					
+					db.transaction(function(tx) {
+					   // tx.executeSql("drop table if exists bbsTable");
+					   tx.executeSql("create table if not exists bbsTable ("
+					     + "id integer primary key,"
+					     + "title text,"
+					     + "user_name text,"
+					     + "create_date text,"
+					     + "content text,"
+					     + "latitude text,"
+					     + "longitude text"
+					     + ")",null,null, logger);
+					   
+					   //  Table 값을 모두 출력한다 
+					   showRecords();
+					 });
+					
+					 // 5초마다 새로운 글이 있는가 확인한다
+					 setInterval( 'checkCount()',5 * 1000 );
+				}
+				
+				var prevCount;	// 현재 화면에 표시된 글의 개수 
+				var newCount;		// DB 의 글 개수.  prevCount 값과 차이가 하면 "새로운 글이 있습니다." 를 표시하는데 사용된다 
+				
+				// DB에 새로운 글이 있는지 체크한다 
+				function checkCount() {
+					// 현재 화면에 표시된 글을 개수 
+					prevCount = document.getElementsByName('bbs').length;
+					
+			    db.transaction(function(tx) {
+			    		// DB의 글 개수를 구해온다 
+				      tx.executeSql("select count(1) as cnt from bbsTable", [], function(tx, results) {
+				        newCount = results.rows.item(0).cnt;
+				        
+				        // DB에 더 많은 글이 있는 경우 
+								if( newCount > prevCount)
+									displayNewMsg();	// 화면에 "새로운 글이 있습니다."를 표시한다 
+				      });
+				  });
+				}
+
+				// 화면에 "새로운 글이 있습니다."를 표시한다 
+				function displayNewMsg() {
+					var text = '<div class="h2_cont" style="border-top: 0px; margin: 10px 0 10px 0" name="bbs" id=newMsg>';
+					    text += '<h3 style="padding: 5px 0 5px 5px">  <a onClick="getNewMsg();">새로온 메세지가 있습니다.</a> </h3></div>';
+					var textHide = $(text).hide();
+					textHide.prependTo($('#services')).slideDown();
+				}
+
+				// 새로운 글을 조회하여 화면에 표시한다.(제목.내용 모두)
+				function getNewMsg() {
+			    html = "";
+			    db.transaction(function(tx) {
+			    	//  bbsTable  조
+			      tx.executeSql("select * from bbsTable", [], function(tx, results) {
+			    	  
+			    	  // 현재 화면에 표시된 것의 다음 순번부터 글을 표시한다
+			        for (var i=prevCount; i<results.rows.length; i++) {
+			          var record = results.rows.item(i);
+			            
+			      	 	html += '<div class="h2_cont" style="border-top: 0px; margin: 10px 0 10px 0"  name="bbs">';
+			      	 	html += '<h3 style="padding: 5px 0 5px 5px">';
+			      	 	html += record.user_name + ' : ' + record.title;
+			      	 	html += '</h3>';
+			      	 	html += record.content + ' - ' + record.create_date + " <button id='"+record.id+"' class='remove' onClick='recordsOnClick(this)';>x</button> ";
+			      	 	html += '</div>';
+			        }
+			    	  
+			    	  // 글을 화면에 추가한다. ( Slide Down  효과와 함께 )
+			        var htmlHide = $(html).hide();
+			        $('#newMsg').slideDown().hide();
+			        htmlHide.prependTo($('#services')).slideDown();
+			      });
+			    });
+				}
+				
+				/*
+				function status(status) {
+				  document.getElementById("status").innerHTML = status;
+				}*/
+				
+				// 에러 로그 남기는 메소드 
+				function logger(tx, error) {
+				  console.log("Error", error.message);
+				}
+				
+				// selector
+				function $_(selector) {
+				  return document.querySelector(selector);
+				}
+				
+				// 새로운 글의 저장
+				function save() {
+					db.transaction(function(tx) {
+						
+				    tx.executeSql(
+				        "insert into bbsTable (title, user_name, create_date, content) "
+				      + "values (?,?,?,?)", [$_("#title").value, $_("#userName").value, $_("#createDate").value, $_("#content").value],
+				      null, logger
+				    );
+				    showRecords();	//  Table 값을 모두 출력한다 
+				  });
+				};
+				
+				// 선택된 글의 삭제 
+			  function recordsOnClick(o) {
+					
+					// 지우기 버튼여부 확인 
+			    if (o.className!="remove") return;
+			    
+			    var recordID = o.id;
+			    db.transaction(function(tx) {
+			    	// 선택된 게시물 삭제
+			      tx.executeSql("delete from bbsTable where id=?", [recordID], null, logger);
+			      showRecords();
+			    });
+			  }
+				
+				// 모든 게시물을 화면에 표시 한다. 
+				function showRecords() {
+			    html = "";
+			    db.transaction(function(tx) {
+			      tx.executeSql("select * from bbsTable order by id desc", [], function(tx, results) {
+			        for (var i=0; i<results.rows.length; i++) {
+			          var record = results.rows.item(i);
+			            
+			      	 	html += '<div class="h2_cont" style="border-top: 0px; margin: 10px 0 10px 0"  name="bbs">';
+			      	 	html += '<h3 style="padding: 5px 0 5px 5px">';
+			      	 	html += record.user_name + ' : ' + record.title;
+			      	 	html += '</h3>';
+			      	 	html += record.content + ' - ' + record.create_date + " <button id='"+record.id+"' class='remove' onClick='recordsOnClick(this)';>x</button> ";
+			      	 	html += '</div>';
+			        }
+			        $_("#records").innerHTML = html;
+			      });
+			    });
+			  }
+				
+			</script> 
+      
+</head>
+<body onLoad="init();">
+
+	 <header id="top">
+         <h1>w3labs.kr <small>Demo <em>&amp;</em> Samples</small></h1>
+         <div id="say_hello">
+         	<p>say hello!</p>
+            <div id="hello">
+         		<a href="mailto:contact@w3labs.kr">contact@w3labs.kr</a>
+            	<a href="tel:+07075142739">070.7514.2739</a>
+            </div>
+         </div>
+     </header><!-- end #header -->
+      
+     <section id="services">
+       <p id="records"></p> 
+ 
+<div id="status"> 
+         
+     </section><!-- end #services -->
+     
+     
+          
+          
+     <section id="services">
+	      <div class="third" style="width:500px;">
+	      	<h3><span>1.</span>  새글쓰기</h3>
+	         <ul id=menu1>
+							<li>User Name : <input type=text id=userName size=30></li>
+							<li>Title : <input type=text id=title size=30></li>
+							<li>Create Date : <input type=text id=createDate size=30></li>
+							<li>Content : <textarea type=text id=content size=30></textarea></li>
+	          </ul>
+	          <ul>
+	          	<button id="save" onClick="save();">Save</button> 
+	          </ul>
+	      </div>
+     </section><!-- end #clients -->
+     
+     
+     <footer>
+     	 
+         <a href="#top"><img src="../resources/img/top.jpg" alt="back-to-top"></a>
+         <p>Built with HTML5, CSS3, Typekit &amp; Media Queries</p>
+         
+     </footer><!-- end #footer -->
+   
+</body></html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html> 
+<html>
+<head>
+	<script type="text/javascript">
+function draw()
+{
+  var canvas = document.getElementById("MyCanvas");
+ 	if (canvas.getContext) {
+  	var ctx = canvas.getContext("2d");
+  	
+  	// ???
+  	
+    ctx.fillRect (0,0,300,250);  
+    ctx.fillRect(250,300,600,500);
+  }  
+}
+	</script>
+</head>
+<body onLoad="draw();">
+	<canvas id="MyCanvas" width="600" height="500"> </canvas>
+</body>
+</html>

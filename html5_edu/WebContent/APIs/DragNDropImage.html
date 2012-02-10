@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+      <!-- Meta -->
+			<meta charset="UTF-8">
+      <title>W3Labs.kr</title>
+
+      <!--[if lt IE 9]>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+      <![endif]-->
+      
+      <!-- 공통 CSS -->
+      <link rel="stylesheet" href="../resources/css/reset.css" media="all">
+      <link rel="stylesheet" href="../resources/css/fonts.css" media="all">
+      <link rel="stylesheet" href="../resources/css/style.css" media="all">
+      
+      <!-- Media Queries -->
+      <link rel="stylesheet" href="../resources/css/10col.css" media="only screen and (min-width: 992px)">
+      <link rel="stylesheet" href="../resources/css/8col.css" media="only screen and (min-width: 768px) and (max-width: 991px)">
+      <link rel="stylesheet" href="../resources/css/3col.css" media="only screen and (max-width: 767px)">
+      <link rel="stylesheet" href="../resources/css/5col.css" media="only screen and (min-width: 480px) and (max-width: 767px)">
+
+      <!-- 스마트폰 대응. 최대확대:3배까지 , 확대/축소:가능 -->
+      <meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=3.0; user-scalable=yes">
+      <!-- Add "maximum-scale=1.0, user-scalable=no" to fix the Mobile Safari auto-zoom bug on orientation changes, but keep in mind that it will disable user-zooming completely. Bad for accessibility. -->   
+     
+      <!-- 아이콘 16x16 -->
+      <link rel="shortcut icon" href="http://w3labs.kr/wp-content/uploads/2011/01/logo_temp.png" type="image/x-icon">
+      <link rel="icon" href="http://w3labs.kr/wp-content/uploads/2011/01/logo_temp.png" type="image/x-icon">
+      
+      <!-- 아이콘 Apple 144x144 -->
+      <link rel="apple-touch-icon" sizes="114x114" href="http://w3labs.kr/wp-content/uploads/2011/01/logo_temp.png"> 
+      
+      <!-- iOS에서 웹페이지를 [홈 화면에 추가] -->
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="apple-mobile-web-app-status-bar-style" content="black">
+      <link rel="apple-touch-startup-image" href="http://w3labs.kr/wp-content/uploads/2011/01/logo_temp.png">
+                   
+      <meta name="description" content="W3Labs.kr Demo & Samples Site">
+      <meta name="keywords" content="w3labs.kr html5 sencha touch phonegap">
+                 
+      <!-- Jquery -->
+      <script src="../resources/js/jquery-1.6.1.min.js"></script>
+      <script>
+      	function init(){
+      		$('#thumbs').hide();
+      	}
+				/*********** 메뉴 List Drag and Drop 소스 코드 시작 *****************/
+				function imagesSelected(myFiles) {
+				  for (var i = 0, f; f = myFiles[i]; i++) {	// Drag and Drop 된 이미지의 개수 만큼 반복 
+					  
+				    var imageReader = new FileReader();			// 이미지를 읽어 들인다. 읽어들일 대상은 readAsDataURL()에서 정한다 
+				    imageReader.onload = (function(aFile) {	// 이미지를 모두 읽어 들이면 실행 
+				      return function(e) {
+				        var span = document.createElement('span');	// Span 테그 생성
+				        // 이미지 생성
+				        span.innerHTML = ['<img name="myImg" class="images" src="', e.target.result,'" title="'
+				                          , aFile.name, '" width=200 style="opacity:0; margin:15px;" />'].join('');
+
+			        	document.getElementById('thumbs').insertBefore(span, null); // 이미지를 화면에 추가한다 
+				        
+			        	//  jQuery 를 이용하여 이미지를 부드럽게 생성되도록 한다--- 시작 
+				        var count = document.getElementsByName('myImg').length;
+				        var o = document.getElementsByName('myImg')[count-1];
+				        
+				        if( count == 1 )
+					        $("#thumbs").slideDown(1500, function(){	// 영역 확대(SlideDown)
+						          $(o).animate({opacity: 1},2000);			// 이미지 나타나게 하기
+					        });
+				        else
+			          	$(o).animate({opacity: 1},2000);					// 이미지 나타나게 하기
+				    		//  jQuery 를 이용하여 이미지를 부드럽게 생성되도록 한다--- 끝 
+				      };
+				    })(f);
+				    imageReader.readAsDataURL(f);	// 읽어들일 대상 지정
+				  }
+				}
+				
+				// Drag and Drop 되면 실행되는 파일
+				function dropIt(e) {  
+				   imagesSelected(e.dataTransfer.files); 	// 이미지 추가
+				   e.stopPropagation();  	// 이벤트의 전파를 멈추게 한다
+				   e.preventDefault();   	// 자신의 기본 이벤트를 취소하는 기능 
+				}  
+      </script>
+      
+</head>
+<body onLoad="init();">
+
+	 <header id="top">
+         <h1>w3labs.kr <small>Demo <em>&amp;</em> Samples</small></h1>
+         <div id="say_hello">
+         	<p>say hello!</p>
+            <div id="hello">
+         		<a href="mailto:contact@w3labs.kr">contact@w3labs.kr</a>
+            	<a href="tel:+07075142739">070.7514.2739</a>
+            </div>
+         </div>
+    </header><!-- end #header -->
+		
+		<section>
+			<p>Hello</p>
+			<p>		
+				<table width="100%" border="1" cellspacing=0 cellpadding=5>
+					<tr bgcolor="#F2F2F2">
+						<td class="tableheader" align="left">
+							<p>Thumbnail palette</p></td>
+					</tr>
+					<tr>
+						<td style="border: 2px dashed #BBB; text-align:center"  align="left" height="120"
+						ondragenter="return false" ondragover="return false" ondrop="dropIt(event)">
+						
+							Drop Image Here
+							
+							<div id="thumbs" style='height:200px; text-align:center;'></div>
+						</td>
+					</tr>
+					<tr>
+						<td align="center">
+							<p>
+								Drag & drop or choose images from your local file system: <input type="file" id="input" size="10" multiple="true"
+									onchange="imagesSelected(this.files)" />
+							</p></td>
+					</tr>
+				</table>
+			</p>
+		</section>
+	
+     
+    <footer>
+     	 
+         <a href="#top"><img src="../resources/img/top.jpg" alt="back-to-top"></a>
+         <p>Built with HTML5, CSS3, Typekit &amp; Media Queries</p>
+         
+    </footer><!-- end #footer -->
+   
+</body></html>

@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<script>
+ 
+window.onload = function() {
+  var canvas=document.getElementById("myCanvas");
+  var context=canvas.getContext("2d");
+ 
+	var destX = 50;
+	var destY = 130; 
+	var destWidth = 200;
+	var destHeight = 137;
+	
+	var imageObj = new Image();
+	imageObj.onload = function() {
+	  context.drawImage(imageObj,destX,destY,destWidth,destHeight);
+	  
+		var idata = context.getImageData(destX,destY,destWidth,destHeight);
+		var data = idata.data;
+		
+		for(var i = 0; i < data.length; i+=4) {
+			var r = data[i] + 40;
+			var g = data[i+1] + 40;
+			var b = data[i+2] + 40;
+			
+			data[i]  = r;
+			data[i+1] = g;
+			data[i+2] = b;
+			
+		}
+		idata.data = data;
+		context.putImageData(idata,destX+destWidth,destY);
+	  
+	}
+	imageObj.src = "resources/img/Tulips.jpg";
+}
+ 
+</script>
+</head>
+<body>
+  <canvas id="myCanvas" width="600" height="400"  border=1></canvas>
+</body>
+</html>

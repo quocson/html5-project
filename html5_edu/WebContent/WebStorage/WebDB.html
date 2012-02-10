@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Insert title here</title>
+<script> 
+	var db = window.openDatabase("myTable", "1.0", "myTable Description", 1024);
+	
+	function init() {
+	  if (!window.openDatabase) {
+		    status("Database not supported");
+		    return;
+		}
+	  
+		db.transaction(function(tx) {
+		   // tx.executeSql("drop table if exists myTable");
+		   tx.executeSql("create table if not exists myTable ("
+		     + "id integer primary key,"
+		     + "name text,"
+		     + "age integer"
+		     + ")",null,null, logger);
+		   showRecords();
+		   console.log("doffo");
+		 });
+	}
+	
+	function status(status) {
+	  document.getElementById("status").innerHTML = status;
+	}
+	function logger(tx, error) {
+	  console.log("Error", error.message);
+	}
+	function logArguments() {
+	  console.log(arguments);
+	}
+	function $_(selector) {
+	  return document.querySelector(selector);
+	}
+	
+	function save() {
+		db.transaction(function(tx) {
+	    console.log("running2");
+	    tx.executeSql(
+	        "insert into myTable (name, age) "
+	      + "values (?,?)", [$_("#firstName").value, $_("#age").value],
+	      null, logger
+	    );
+	    console.log("done");
+	    showRecords();
+	  });
+	};
+	
+  function ageOnKeyUp(ev) {
+	    if (ev.keyCode==13) $_("#save").onclick();
+	};
+	 
+	
+  function recordsOnClick(o) {
+    if (o.className!="remove") return;
+    var recordID = o.id;
+    console.log(recordID);
+    db.transaction(function(tx) {
+      tx.executeSql("delete from myTable where id=?", [recordID], null, logger);
+      showRecords();
+    });
+  }
+	
+	
+	function showRecords() {
+    console.log("db", db);
+    html = "";
+    db.transaction(function(tx) {
+      tx.executeSql("select * from myTable", [], function(tx, results) {
+        for (var i=0; i<results.rows.length; i++) {
+          var record = results.rows.item(i);
+          html+="<button id='"+record.id+"' class='remove' onClick='recordsOnClick(this)';>x</button> "
+            +record.name+" - "+record.age + "<br/>";
+        }
+        $_("#records").innerHTML = html;
+      });
+    });
+  }
+
+</script> 
+</head>
+<body onLoad="init();">
+<strong>Web SQL DB</strong> 
+ 
+<input id="firstName" value="Kim" /> 
+<input id="age" value="23" /> 
+<button id="save" onClick="save();">Save</button> 
+<p id="records"></p> 
+ 
+<div id="status"> 
+</div>
+</body>
+</html>

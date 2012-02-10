@@ -1,0 +1,282 @@
+<!doctype html> 
+<html> 
+<head> 
+    <meta charset="UTF-8" />
+    <title>패러디 웨이브 version 0.1a</title>
+	<style type="text/css"> 
+		* { margin: 0; padding: 0; font-family: Helvetica; font-size: 9pt; }
+		body { width: 100%; height: 100%; color; #444; overflow: hidden; }
+		ul { list-style: none; }
+		li { padding-left: 5px; font-weight: normal; color:#aaa; border-bottom: 1px dotted #ddd; padding-top: 5px; padding-bottom: 5px; }
+		li:first-child { font-weight: bold; color: #000; }
+		#thread-list { margin-top: 20px; }
+		#thread-list li { border-style: none; display: inline; margin-right: 10px; }
+		#welcome { position: fixed; width: 100%; height: 60px; margin-top: 200px; text-align: center; background-color: #888; padding-top: 30px; background: -moz-linear-gradient(center top, #444 0%,#222 100%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #444),color-stop(1, #222));}
+		#home { position: fixed; width: 100%; height: 200px; margin-top: 200px; text-align: center; background-color: #888; padding-top: 30px; background: -moz-linear-gradient(center top, #444 0%,#222 100%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #444),color-stop(1, #222));}
+		#header { display: none; position: fixed; width: 100%; height: 30px; left: 0; top: 0; background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #444),color-stop(1, #222));}
+		#header > h1 { color: #fff; font-weight: bold; font-size; 16px; float: left; margin-left: 10px; margin-top: 8px;}
+		#join-count { float: right; height: 12px; margin-right: 5px; margin-top: 4px; background-color: #666; color: #ddd; padding: 3px; padding-left: 10px; padding-right: 10px; -webkit-border-radius: 10px 10px; font-size: 10px; background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #111),color-stop(1, #555)); }
+		#input-container { position: fixed; width: 90%; height: 30px; bottom: 0; left: 10px; }
+		#thread-container { width: 100%; height: 100%; overflow: auto; background-color: white; padding: 10px; padding-top: 30px;}
+		input[type=text] { border: 1px solid #ccc; height: 25px; font-size: 14px; }
+		input[type=button] { padding: 5px; padding-left: 15px; padding-right: 15px; font-size: 14px; border: 1px solid #e0a903; border-radius: 6px 6px; text-shadow: rgba(255,255,255,.5) 0 1px 0; background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #ffc000),color-stop(1, #e0a903)); background: -moz-linear-gradient(center top, #ffc000 0%,#e0a903 100%);}
+		#thread > div { display: block; float: left; width: 180px; height: 250px; margin-right: 10px; margin-top: 5px; border: 1px solid #ddd; -webkit-box-shadow: 5px 5px 5px #aaa; -webkit-border-radius: 10px 10px; background-color:white; opacity:0.7}
+		#thread > div .title { background-color: #eee; padding: 3px; border-bottom: 1px solid #bbb; -webkit-border-top-left-radius: 10px 10px; -webkit-border-top-right-radius: 10px 10px; background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #fff),color-stop(1, #ccc));}
+		#thread > div .title .msg-count { float: right; height: 12px; margin-right: 5px; margin-top: 3px; background-color: #fff; border: 1px solid #bbb; color: #444; padding-left: 3px; padding-right: 3px; -webkit-border-radius: 10px 10px; font-size: 10px; }
+		#thread > div .title .msg-count:hover { background-color: #444; border: 1px solid #222; color: #ccc; cursor: pointer;  }
+		#thread > div .title > h1 { display: inline; text-align: right; margin-right: 10px; text-overflow: ellipsis; font-size: 14px; }
+		#thread > div div.article-container { clear: both; padding: 5px; height: 205px; overflow: hidden; }
+		#thread > div .article { font-size: 12px; }
+		#thread > div .article .before { color: #bbb; }
+		#thread > div .article .current { color: #444; font-weight: bold; }
+		#thread > div .article hr { stroke-width: 1px; margin-top: 5px; margin-bottom: 5px; }
+		#line { width: 90%; }
+	</style> 
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> 
+    <script> 
+    var ParodyWaveClient = {
+        conn: null,
+        user: "",
+        thread: false,
+        line: null,
+        writing: false,
+        currentValue: "",
+		threadStore: null
+	}
+ 
+    $(document).ready(function () {
+		var docWidth = $(document).width();
+		var docHeight = $(document).height() - 30;
+		
+		$("#thread-container").css("height", docHeight+"px");
+		
+        $("#new-thread").click(openThread);
+        $("#connect").click(function () {
+            if (! ParodyWaveClient.conn) login();
+            else logout();
+        });
+    });
+ 
+    window.onunload = function () {
+        if (ParodyWaveClient.conn) ParodyWaveClient.conn.close();
+    }
+    function login() {
+        if("WebSocket" in window) {
+            debug("connecting...");
+            //ParodyWaveClient.conn = new WebSocket("ws://member.webxapp.com:8888");
+            //ParodyWaveClient.conn = new WebSocket("ws://localhost:8888");
+            ParodyWaveClient.conn = new WebSocket("ws://ext.w3labs.kr:8888");
+            //ParodyWaveClient.conn = new WebSocket("ws://www.webdevmobile.com:8888");
+            //ParodyWaveClient.conn = new WebSocket("ws://118.217.181.153:8000");
+            ParodyWaveClient.conn.onopen = function () {
+                debug("connection established");
+                ParodyWaveClient.user = $("#userid").val();
+                $("#welcome>input").attr("disabled",true);
+                $("#connect").val("LogOut").attr("disabled",false);
+                $("#home").show();
+				$("#welcome").hide();
+				
+                sendMsg({cmd: "status"});
+                sendMsg({cmd: "list"});
+ 
+				ParodyWaveClient.threadStore = new Array();
+				
+                setInterval(function() {
+                  ParodyWaveClient.conn.send('HB');
+                }, 60000);
+            }
+            ParodyWaveClient.conn.onmessage = onWebSocketMessage;
+            ParodyWaveClient.conn.onclose = onWebSocketClose;
+        }
+        else {
+            alert("This web browser doesn't support WebSocket!");
+        }
+    }
+    function logout() {
+        ParodyWaveClient.conn.close();
+    }
+    function openThread() {
+        sendMsg({cmd: "open", user: $("#userid").val(), title: $("#title").val()});
+    }
+    function joinThread(idx) {
+        sendMsg({cmd: "join", user: $("#userid").val(), id: idx});
+    }
+    function debug(str) {
+        if ($("#chk-debug").attr("checked"))
+            console.log(str);
+    }
+    function sendMsg(msg) {
+        if (ParodyWaveClient.conn) ParodyWaveClient.conn.send(JSON.stringify(msg));
+    }
+    function onWebSocketMessage(e) {
+        console.log(e.data);
+        var msg;
+        try {
+            msg = JSON.parse(e.data);
+        }
+        catch (e) {
+            debug("Invalid message");
+            msg = {type: 'error'};
+        }
+        switch (msg.type) {
+            case 'status':
+                $("#join-count").text("Connection: "+msg.connections);
+                break;
+            case 'join':
+                if (msg.data) {
+                    for (var i = 0 ; i < msg.data.length ; i ++) {
+						addThreadData("new", msg.data[i][0], i, msg.data[i][1], msg.data[i][2]);
+					}
+                }
+                $("#input-container").show();
+                $("#home").hide();
+ 
+				$("#header > h1").html("패러디 웨이브 version 0.1a");
+				$("#header").show();
+				
+                ParodyWaveClient.currentValue = "";
+                
+                $("#line").bind("keyup", function (event) {
+                    cmd = {cmd: 'update'};
+                    if (! ParodyWaveClient.writing) {
+                        ParodyWaveClient.writing = true;
+                        cmd.cmd = 'new';
+                    } else if (event.keyCode == 13 && event.srcElement.value != "") {
+                        cmd.cmd = 'submit';
+                        event.srcElement.value = "";
+                        ParodyWaveClient.writing = false;
+                    } else if (ParodyWaveClient.currentValue == event.srcElement.value) return;
+                    cmd.value = ParodyWaveClient.currentValue = event.srcElement.value;
+                    sendMsg(cmd);
+                });
+                break;
+            case 'list':
+                $("#thread-list").html("");
+                for (var i = 0 ; i < msg.threads.length ; i ++) {
+                    if (! msg.threads[i]) continue;
+                    $("#thread-list").append("<li><input type='button' onclick='joinThread(" + msg.threads[i][0] + ")' value='"+msg.threads[i][1]+"방에 조인' /></li>");
+                }
+                break;
+            case 'update':
+                if (typeof msg.value != "string") addThreadData("new", msg.id, msg.line, msg.user, msg.value);
+                else addThreadData("update", msg.id, msg.line, msg.user, msg.value);
+        }
+    }
+ 
+	function addThreadData(type, id, lineNo, user, msg) {
+		if (msg == undefined) msg = "<img src='resources/img/wait.png' align='absmiddle'>";
+		if (!$.isArray(ParodyWaveClient.threadStore[id])) {
+			ParodyWaveClient.threadStore[id] = new Array();
+			ParodyWaveClient.threadStore[id].push(new Array(lineNo, user, msg));
+		} else {
+			var matchLineNo = false;
+			
+			for (i = 0; i < ParodyWaveClient.threadStore[id].length; i++) {
+				if (ParodyWaveClient.threadStore[id][i][0] == lineNo) { 
+					matchLineNo = true;
+					ParodyWaveClient.threadStore[id][i][2] = msg;
+					break;
+				}
+			}
+			
+			if (!matchLineNo) ParodyWaveClient.threadStore[id].push(new Array(lineNo, user, msg));
+		}
+		
+		if (ParodyWaveClient.threadStore[id].length == 1 && type == "new") { // new 
+	        $("#thread").append('<div id="fdata'+id+
+				'"><div class="title"><img src="resources/img/person.png" align="absmiddle"><h1>'+ParodyWaveClient.threadStore[id][0][1]+
+				'</h1><div class="msg-count" boxid="'+id+'" onclick="toogleHistory(this);">1</div></div><div class="article-container"><ul class="article"><li class="line-'+lineNo+'">'+ParodyWaveClient.threadStore[id][0][2]+
+				'</li></ul></div></div>');
+		} else {
+			for (i = 0; i < ParodyWaveClient.threadStore[id].length; i++) {
+				if ($("#fdata"+id+" .article li.line-"+lineNo).length <= 0)
+					$("#fdata"+id+" .article").prepend("<li class='line-"+lineNo+"'>"+ParodyWaveClient.threadStore[id][i][2] + "</li>");
+				else 
+					$("#fdata"+id+" .article li.line-"+lineNo).html(ParodyWaveClient.threadStore[id][i][2]);
+			}
+			
+			$("#fdata"+id+" .title .msg-count").text(ParodyWaveClient.threadStore[id].length);
+		}
+	}
+	
+	function toogleHistory(f) {
+		var idf = "#fdata"+$(f).attr("boxid")+" .article-container";
+		if ($(idf).css("overflow-y") == "auto")
+			$(idf).css("overflow-y", "hidden");
+		else 
+			$(idf).css("overflow-y", "auto");
+	}
+ 
+    function onWebSocketClose() {
+        debug('Disconnected');
+        $("#welcome>input").attr("disabled",false);
+        
+        // initiate text input
+        $("#userid").val("");
+        $("#title").val("");
+        $("#line").val("");
+        $("#connect").val("LogIn")
+        
+        // close others
+        $("#home").hide();
+        $("#input-container").hide();
+        $("#thread").html("");
+        $("#users").text("");
+        $("#welcome").show();
+ 
+        // initiate status
+        ParodyWaveClient.conn = null;
+        ParodyWaveClient.user = "";
+        ParodyWaveClient.thread = false;
+        ParodyWaveClient.line = null;
+        ParodyWaveClient.writing = false;
+        ParodyWaveClient.currentValue = false;
+        
+        // unbind event
+        $("#line").unbind();
+    }
+    </script> 
+</head> 
+<body> 
+    <div id="welcome"> 
+ 
+        <input type="text" id="userid" placeholder="대화명을 입력해주십시오."/> 
+        <input type="button" id="connect" value="로그인" /> 
+        <input type="checkbox" id="chk-debug" title="Show Debug Message"/> 
+    </div> 
+ 
+    <div id="home" style="display:none;"> 
+        <input type="text" id="title" placeholder="생성할 방제목을 입력해주십시오."/> 
+        <input type="button" id="new-thread" value="Create!" /> 
+        <div> 
+            <ul id="thread-list"></ul> 
+        </div> 
+    </div> 
+ 
+	<div id="header"> 
+		<h1>패러디 웨이브</h1> 
+		<div id="join-count"></div> 
+	</div> 
+ 
+	<div id="thread-container">
+    	<video width="95%" height=95% id="v" autoplay loop poster="resources/img/poster1.png"> 
+				<source src="../Canvas/resources/img/chrome.webm" type='video/webm' /> 
+				<source src="../Canvas/resources/img/chrome.mp4"  type='video/mp4' /> 
+				<source src="../Canvas/resources/img/chrome.ogv"  type='video/ogg' /> 
+				Your browser does not support the video tag
+				<!-- 이곳에 실버라이트 Object를 넣으시면 HTML5 Video테그를 지원하지 않는 브라우저에서는 실버라이트가 작동합니다 -->
+			</video> 
+    	<div id="thread" style="position:absolute;top:50px;">
+
+    	</div> 
+	</div> 
+ 
+    <div id="input-container" style="display:none;"> 
+        <img src="resources/img/chat.png" align="absmiddle">&nbsp;<input type="text" id="line"/> 
+    </div> 
+    <div id="status" style="display:none;"> 
+        <p id="users"></p> 
+ 
+    </div> 
+</body> 
+</html>

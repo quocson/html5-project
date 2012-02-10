@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<title>HTML5</title>
+  <style type="text/css">
+    /**************** Default CSS ********************/
+    body { background-color: white; padding: 20px; }
+    section {  border: 4px solid #AAA; width: 600px; text-align: center; padding: 30px;  box-shadow:7px 5px 11px #aaa;}
+    article { font-size: 30px; }
+    /**************** Default CSS ********************/
+
+    /******* HTML5 CSS3 Example ******
+    article { text-shadow:2px 2px 2px #ccc; }**/
+  </style>
+</head>
+<body>
+
+ 
+        <div class="slide realtime-communication" id="notifications-api"> 
+          <style> 
+            #notifications-message {
+              text-align: center;
+            }
+          </style> 
+          <header><h1>Notifications</h1></header> 
+          <section> 
+        <div id="notifications-message"> 
+          <p> 
+            <button id="request-permission" href="#">Set notification permissions for this page</button> 
+          </p> 
+          <p>Note: Use this button if you also want to <em>reset</em> the permissions</p> 
+ 
+          <br> 
+          <p>Enter your twitter user name to show your last tweet as a notification</p> 
+          <input type="text" id="username" placeholder="username" /> 
+          <button id="show-tweets">Show tweet notifications</button> 
+        </div> 
+ 
+          <script> 
+          var myNoti;
+          
+          document.getElementById('request-permission').addEventListener('click', function() {
+            window.webkitNotifications.requestPermission();
+          }, false);
+ 
+          document.getElementById('show-tweets').addEventListener('click', function() {
+            readTweets();
+          }, false);
+ 
+          function readTweets() {
+            var username = document.getElementById('username').value;
+            if (username == 'username') {
+              alert('Enter a username first');
+              return;
+            }
+            var script = document.createElement("script");
+            script.src = 'http://twitter.com/statuses/user_timeline/'+ username+'.json?count=1&callback=fetchTweets';
+            document.body.appendChild(script);
+          }
+ 
+          function fetchTweets(data) {
+            var tweet;
+            var i = data.length;
+            while (i--) {
+              tweet = data[i];
+              if (window.webkitNotifications.checkPermission() == 0) {
+                // note the show()
+                myNoti = window.webkitNotifications.createNotification(tweet.user.profile_image_url, tweet.user.name, tweet.text);
+                myNoti.ondisplay = function() {
+									window.setTimeout("myNoti.cancel();", 5 * 1000);	// 5초후 자동 Close 된다.
+								};
+								myNoti.show();
+								
+              } else {
+                alert('Notification 권한이 없습니다.');
+                return;
+              }
+            }
+          }
+          </script> 
+ 
+          </section> 
+        </div> 
+ 
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<script>
+ 
+window.onload = function() {
+  var canvas=document.getElementById("myCanvas");
+  var ctx=canvas.getContext("2d");
+ 
+  ctx.lineWidth = 10;
+  ctx.fillStyle = "#F00";
+  ctx.beginPath();
+
+  var i, x, y;
+  for(var i=10; i; i--){
+    var x = Math.round(Math.random() * 600),
+        y = Math.round(Math.random() * 400);
+
+    ctx.lineTo(x, y);
+  }
+
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+}
+ 
+</script>
+</head>
+<body>
+  <canvas id="myCanvas" width="600" height="400"></canvas>
+</body>
+</html>

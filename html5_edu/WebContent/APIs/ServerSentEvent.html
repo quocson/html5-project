@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">	
+	
+	<title>Server-Sent Event</title>
+  <script >
+  	function init(){
+			var eventSrc = new EventSource('/html5_edu/SSEServlet');
+			eventSrc.addEventListener('message', onMessageHandler);
+  	}
+   
+   function onMessageHandler(event){
+			var data = event.data;
+			document.getElementById("msg").innerText = data;
+   }
+ </script>
+</head>
+<body onLoad="init();">
+  <h1>Server-Sent Event</h1>
+  <label id="msg"></label>
+  
+
+</body>
+</html>
+

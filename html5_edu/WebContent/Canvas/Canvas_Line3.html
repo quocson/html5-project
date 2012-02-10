@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head></head>
+<body>
+  <canvas id="myCanvas" width="400" height="300" style="border: 1px solid #333;"></canvas>
+  
+  <script type="text/javascript">
+    var canvas = document.getElementById('myCanvas');
+    var ctx = canvas.getContext('2d');
+    var img = new Image();
+    img.src = 'resources/img/backdrop.png';
+    img.onload = function(){
+      ctx.drawImage(img,0,0);
+      ctx.beginPath();
+      ctx.moveTo(30,96);
+      ctx.lineTo(70,66);
+      ctx.lineTo(103,76);
+      ctx.lineTo(170,15);
+      ctx.stroke();
+    }
+    //ctx.fill();
+  </script>
+</body>
+</html>
