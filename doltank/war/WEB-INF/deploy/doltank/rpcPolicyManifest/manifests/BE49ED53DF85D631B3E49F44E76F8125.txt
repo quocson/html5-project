@@ -1,0 +1,2 @@
+serviceClass: com.doltank.client.GreetingService
+path: DA76B69C6568638E9C03218D5C21EF4F.gwt.rpc
