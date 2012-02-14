@@ -1,0 +1,43 @@
+<!doctype html>
+<html dir="ltr" lang="ko-KR">
+<head>
+
+<meta charset="UTF-8" />
+
+<title>Doltank</title>
+
+
+<!-- jquery -->
+<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="js/twit.js"></script>
+
+<style type='text/css'>
+body {
+font-size: 14px;
+line-height: 160%;
+}
+</style>
+<script>
+$.getTweet('doltank74', [20, 30], function(data){ $.each($.getTweet.api, function(i, item){
+    $('<span>"' + item.created_at + '"</span>').appendTo('#tw1')
+    });
+});
+</script>
+
+</head>
+
+<body class="home blog">
+
+<div id="pagewrap">
+
+	<header id="header">
+
+		<hgroup>
+			<h1 id="site-logo"><a href="#">Doltank.com</a></h1>
+			<h2 id="site-description">Ohjoon, Sung</h2>
+		</hgroup>
+	</header>
+	<div id="tw1"></div>
+	</div>
+</body>
+</html>
