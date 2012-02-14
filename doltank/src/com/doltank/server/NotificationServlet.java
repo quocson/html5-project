@@ -17,10 +17,10 @@ public class NotificationServlet extends HttpServlet {
 	    throws IOException, ServletException {
 	
         PrintWriter out = res.getWriter();
+        System.out.println("Notification has occurred~~!!" + req.getCharacterEncoding() + "/" + res.getCharacterEncoding());
 
     	res.setContentType("text/event-stream");
     	res.setCharacterEncoding("utf-8");
-    	
     	out.write("retry: 5000"); // 5초마다 호출 
     	out.write("\n");
     	out.write("\n");
