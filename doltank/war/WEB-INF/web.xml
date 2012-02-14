@@ -16,6 +16,16 @@
     <url-pattern>/doltank/greet</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+    <servlet-name>notiServlet</servlet-name>
+    <servlet-class>com.doltank.server.NotifcationServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>notiServlet</servlet-name>
+    <url-pattern>/doltank/noti</url-pattern>
+  </servlet-mapping>
+  
   <!-- Default page to serve -->
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
