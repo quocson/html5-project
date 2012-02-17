@@ -27,12 +27,39 @@
 		
 		//class를 추가한다. 
 		$("a").addClass("test");
+		
+		$('a.doSomething').click(function(){
+			    //alert('You did something, woo hoo!');
+			    var now = new Date();
+				if(now.getHours() >= 12)
+				{
+				    debugger;
+				    var goodDay = $('p[title="Good Day Message1"]');
+				    goodDay.text('Good Afternoon!');
+				}
+		});
+		greeting();
 	});
+	
+	function greeting() {
+		var now = new Date();
+		if(now.getHours() >= 12)
+		{
+		    var goodDay = $('p[title="Good Day Message"]');
+		    goodDay.text('Good Afternoon!');
+		}
+	}	
 </script>
 
 </head>
 <body>
 	<input type="text" id="stockPrice" value="" />
+	
+	<a href="#" class="doSomething">Click!</a>
+	
+	<p title="Good Day Message">Good Morning!</p>
+	
+	<p title="Good Day Message1">Good Morning!</p>
 	
 	<input type="button" id="showPicture">
 
