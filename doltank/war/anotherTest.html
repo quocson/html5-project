@@ -1,43 +1,36 @@
 <!doctype html>
-<html dir="ltr" lang="ko-KR">
+<html lang="en">
 <head>
-
 <meta charset="UTF-8" />
-
-<title>Doltank</title>
-
-
-<!-- jquery -->
+<title>JQuery Test</title>
 <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
-<script type="text/javascript" src="js/twit.js"></script>
 
-<style type='text/css'>
-body {
-font-size: 14px;
-line-height: 160%;
-}
-</style>
 <script>
-$.getTweet('doltank74', [20, 30], function(data){ $.each($.getTweet.api, function(i, item){
-    $('<span>"' + item.created_at + '"</span>').appendTo('#tw1')
-    });
-});
+	$(document).ready(function() {
+		$("#picture").hide().next().hide();
+		$("#showPicture").click(function(){
+		   $("#picture").show("fast", function(){
+		       $("#picture").next().show();
+		   });
+		   
+		   //class를 제거한다.
+		   $("a").removeClass("test");
+		});
+		
+		//class를 추가한다. 
+		$("a").addClass("test");
+	});
 </script>
 
 </head>
+<body>
+	<input type="text" id="stockPrice" value="" />
+	
+	<input type="button" id="showPicture">
 
-<body class="home blog">
+	<img src="/images/hello.png" id="picture"><span>This is the picture's caption</span>
+	
+	<a href="#" class="test">gogo</a>
 
-<div id="pagewrap">
-
-	<header id="header">
-
-		<hgroup>
-			<h1 id="site-logo"><a href="#">Doltank.com</a></h1>
-			<h2 id="site-description">Ohjoon, Sung</h2>
-		</hgroup>
-	</header>
-	<div id="tw1"></div>
-	</div>
 </body>
 </html>
