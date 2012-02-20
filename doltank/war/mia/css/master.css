@@ -6,4 +6,4 @@
 @import url("screen-small.css") screen and (max-width: 580px);
 @import url("screen-small.css") screen and (max-device-width: 580px); /* iPhone */
 
-@import url("print.css") print
+@import url("print.css") print; 
