@@ -39,6 +39,37 @@
     <url-pattern>/noti</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+    <description></description>
+    <display-name>FileUploader</display-name>
+    <servlet-name>FileUploader</servlet-name>
+    <servlet-class>com.doltank.server.FileUploader</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FileUploader</servlet-name>
+    <url-pattern>/FileUploader</url-pattern>
+  </servlet-mapping>
+  
+    <servlet>
+    <servlet-name>Upload</servlet-name>
+    <servlet-class>com.doltank.server.Upload</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>Serve</servlet-name>
+    <servlet-class>com.doltank.server.Serve</servlet-class>
+  </servlet>
+ 
+  <servlet-mapping>
+    <servlet-name>Upload</servlet-name>
+    <url-pattern>/upload</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>Serve</servlet-name>
+    <url-pattern>/serve</url-pattern>
+  </servlet-mapping>
+    
   <!-- Default page to serve -->
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
