@@ -1,0 +1,339 @@
+@media screen and (max-width: 1150px) {
+
+	/* set img max-width */
+	img {
+		width: auto\9; /* ie8 */
+		max-width: 100%;
+		height: auto;
+	}
+
+	/************************************************************************************
+	STRUCTURE
+	*************************************************************************************/
+	#pagewrap {
+		max-width: 92%;
+		padding: 2% 3% 10px;
+		margin-bottom: 10%;
+	}
+		
+	/* content */
+	#content {
+		margin: 7% 0 5%;
+	}
+	.sidebar1 #content {
+		max-width: 67.8%;
+	}
+	
+	/* sidebar */
+	#sidebar {
+		margin: 7% 0 5%;
+		max-width: 26.2%;
+	}
+	#sidebar .secondary {
+		max-width: 47%;
+	}
+	
+	/************************************************************************************
+	GRID
+	*************************************************************************************/
+	.col4-1,
+	.col4-2,
+	.col4-3,
+	.col3-1,
+	.col3-2,
+	.col2-1
+	{
+		margin-left: 2%;
+	}
+	.col4-1 {
+		max-width: 23%;
+	}
+	.col4-2, .col2-1 {
+		max-width: 48%;
+	}
+	.col4-3 {
+		max-width: 72%;
+	}
+	.col3-1 {
+		max-width: 31%;
+	}
+	.col3-2 {
+		max-width: 62%;
+	}
+
+	/************************************************************************************
+	LAYOUTS
+	*************************************************************************************/
+	/* list post */
+	.list-post .post,
+	.list-post .type-page,
+	.list-post .attachment {
+		width: 80% !important;
+	}
+	
+	/* grid4 */
+	.grid4 .post {
+		width: 23.125%;
+		margin-left: 2.5%;
+	}
+
+	/* grid3 */
+	.grid3 .post {
+		width: 31%;
+		margin-left: 3.5%;
+	}
+
+	/* grid2 */
+	.grid2 .post {
+		width: 48%;
+		margin-left: 3.75%;
+	}
+}
+
+@media screen and (max-width: 780px) {
+	/************************************************************************************
+	STRUCTURE
+	*************************************************************************************/
+	.sidebar1 #content {
+		width: 100%;
+		max-width: 100%;
+		float: none;
+		clear: both;
+	}
+	
+	/* sidebar */
+	#sidebar {
+		width: 100%;
+		max-width: 100%;
+		float: none;
+		clear: both;
+	}
+	#sidebar .secondary {
+		width: 48%;
+	}
+	
+	/************************************************************************************
+	MAIN NAV
+	*************************************************************************************/
+	.main-nav {
+		position: static;
+		clear: both;
+		z-index: 100;
+	}
+
+	/************************************************************************************
+	LAYOUTS
+	*************************************************************************************/
+	/* list post */
+	.list-post .post,
+	.list-post .type-page,
+	.list-post .attachment {
+		width: 78% !important;
+	}
+
+}
+
+@media screen and (max-width: 600px) {
+	
+	/************************************************************************************
+	GRID
+	*************************************************************************************/
+	.col4-1,
+	.col4-2,
+	.col4-3,
+	.col3-1,
+	.col3-2,
+	.col2-1 {
+		margin-left: 0;
+	}
+	.col4-1,
+	.col4-2, .col2-1,
+	.col4-3,
+	.col3-1,
+	.col3-2	 {
+		width: 100%;
+		max-width: 100%;
+	}
+
+	/************************************************************************************
+	LAYOUTS
+	*************************************************************************************/
+	/* list post */
+	.list-post .post,
+	.list-post .type-page,
+	.list-post .attachment {
+		padding-left: 0 !important;
+		width: 100% !important;
+		max-width: 100% !important;
+	}
+	.list-post .post-meta {
+		width: 100%;
+		text-align: left;
+		position: static;
+	}
+	.list-post .post-meta span {
+		display: inline;
+		margin: 0 5px 0 0;
+	}
+	.list-post .post-icon {
+		width: 27px;
+		height: 30px;
+		display: block;
+		float: left;
+		margin: 2px 14px 5px 0;
+		border: none;
+		position: static;
+	}
+
+	/* grid4 */
+	.grid4 .post, .sidebar1 .grid4 .post {
+		width: 100%;
+		margin-left: 0;
+		float: none;
+	}
+
+	/* grid3 */
+	.grid3 .post, .sidebar1 .grid3 .post {
+		width: 100%;
+		margin-left: 0;
+		float: none;
+	}
+
+}
+
+@media screen and (max-width: 480px) {
+
+	/* disable webkit text size adjust (for iPhone) */
+	html {
+		-webkit-text-size-adjust: none;
+	}
+
+	/************************************************************************************
+	HEADER
+	*************************************************************************************/
+	#header {
+		padding: 0;
+	}
+	#header hgroup {
+		text-align: left;
+	}
+
+	/* site logo */
+	#site-logo {
+		font-size: 42px;
+		text-align: left;
+		padding: 0 90px 0 0;
+		width: auto;
+		margin: 10px 0;
+	}
+	
+	/* site description */
+	#site-description {
+		text-align: left;
+		margin: 0 0 10px;
+	}
+	
+	/* searchform */
+	#header #searchform {
+		top: 0;
+		left: inherit;
+		right: 0;
+		width: 150px;
+	}
+	#header #searchform #s {
+		float: right;
+		width: 85px;
+	}
+	
+	/* social widget */
+	.social-widget {
+		position: static;
+		margin: 10px 0;
+		float: none;
+		padding: 0;
+	}
+
+	/************************************************************************************
+	MAIN NAV
+	*************************************************************************************/
+	.main-nav {
+		width: 100%;
+		padding: 10px 0;
+		margin: 0;
+		font-size: 90%;
+		text-align: left;
+		clear: both;
+	}
+	.main-nav ul {
+		top: 24px;
+	}
+	.main-nav a {
+		padding: 0;
+		margin: 0 10px 0 0;
+	}
+
+	/************************************************************************************
+	LAYOUTS
+	*************************************************************************************/
+	/* grid4 */
+	.grid4 .post {
+		font-size: 100%;
+	}
+
+	/* grid2 */
+	.grid2 .post, .sidebar1 .grid2 .post {
+		width: 100%;
+		margin-left: 0;
+		float: none;
+	}
+	
+	/* post title */
+	.post-title {
+		margin: 0 0 2px !important;
+		padding-top: 4px;
+		font-size: 2em !important;
+	}
+
+	/************************************************************************************
+	POST NAV
+	*************************************************************************************/
+	.post-nav .prev, .post-nav .next {
+		display: block;
+		width: 100%;
+		clear: both;
+		margin-bottom: 10px;
+	}
+	
+	/************************************************************************************
+	COMMENTS
+	*************************************************************************************/
+	.commentlist {
+		padding-left: 0;
+	}
+	.commentlist .commententry {
+		clear: left;
+	}
+	.commentlist .avatar {
+		float: left;
+		width: 40px;
+		height: 40px;
+		margin: 0 10px 10px 0;
+	}
+
+	/* commentlist sub-levels */
+	.commentlist ul, .commentlist ol {
+		margin: 0 0 0 7%;
+	}
+
+	/************************************************************************************
+	FOOTER NAV
+	*************************************************************************************/
+	.footer-nav {
+		margin: 0 auto 20px;
+		width: 100%;
+	}
+	.footer-nav a {
+		margin: 0 4px;
+	}
+
+}
