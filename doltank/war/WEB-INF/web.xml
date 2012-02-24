@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
               http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-         version="2.5"
-         xmlns="http://java.sun.com/xml/ns/javaee">
- 	<filter>
+	version="2.5" xmlns="http://java.sun.com/xml/ns/javaee">
+	<filter>
 		<filter-name>CharacterEncodingFilter</filter-name>
 		<filter-class>com.doltank.shared.CharacterEncodingFilter</filter-class>
 		<init-param>
@@ -12,68 +11,78 @@
 			<param-value>UTF-8</param-value>
 		</init-param>
 	</filter>
-	
+
 	<filter-mapping>
 		<filter-name>CharacterEncodingFilter</filter-name>
 		<servlet-name>notiServlet</servlet-name>
 	</filter-mapping>
-	
-  <!-- Servlets -->
-  <servlet>
-    <servlet-name>greetServlet</servlet-name>
-    <servlet-class>com.doltank.server.GreetingServiceImpl</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-    <servlet-name>greetServlet</servlet-name>
-    <url-pattern>/doltank/greet</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-    <servlet-name>notiServlet</servlet-name>
-    <servlet-class>com.doltank.server.NotificationServlet</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-    <servlet-name>notiServlet</servlet-name>
-    <url-pattern>/noti</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-    <description></description>
-    <display-name>FileUploader</display-name>
-    <servlet-name>FileUploader</servlet-name>
-    <servlet-class>com.doltank.server.FileUploader</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>FileUploader</servlet-name>
-    <url-pattern>/FileUploader</url-pattern>
-  </servlet-mapping>
-  
-    <servlet>
-    <servlet-name>Upload</servlet-name>
-    <servlet-class>com.doltank.server.Upload</servlet-class>
-  </servlet>
-  
-  <servlet>
-    <servlet-name>Serve</servlet-name>
-    <servlet-class>com.doltank.server.Serve</servlet-class>
-  </servlet>
- 
-  <servlet-mapping>
-    <servlet-name>Upload</servlet-name>
-    <url-pattern>/upload</url-pattern>
-  </servlet-mapping>
 
-  <servlet-mapping>
-    <servlet-name>Serve</servlet-name>
-    <url-pattern>/serve</url-pattern>
-  </servlet-mapping>
-    
-  <!-- Default page to serve -->
-  <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-    <welcome-file>Doltank.html</welcome-file>
-  </welcome-file-list>
+	<!-- Servlets -->
+	<servlet>
+		<servlet-name>greetServlet</servlet-name>
+		<servlet-class>com.doltank.server.GreetingServiceImpl</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>greetServlet</servlet-name>
+		<url-pattern>/doltank/greet</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>notiServlet</servlet-name>
+		<servlet-class>com.doltank.server.NotificationServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>notiServlet</servlet-name>
+		<url-pattern>/noti</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<description></description>
+		<display-name>FileUploader</display-name>
+		<servlet-name>FileUploader</servlet-name>
+		<servlet-class>com.doltank.server.FileUploader</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>FileUploader</servlet-name>
+		<url-pattern>/FileUploader</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>Upload</servlet-name>
+		<servlet-class>com.doltank.server.Upload</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>Serve</servlet-name>
+		<servlet-class>com.doltank.server.Serve</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>Upload</servlet-name>
+		<url-pattern>/upload</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>Serve</servlet-name>
+		<url-pattern>/serve</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>spring</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>spring</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+
+	<!-- Default page to serve -->
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>Doltank.html</welcome-file>
+	</welcome-file-list>
 
 </web-app>
