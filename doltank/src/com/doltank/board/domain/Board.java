@@ -13,17 +13,11 @@ import com.google.appengine.api.users.User;
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION)
 public class Board implements Serializable{
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 1L;
 
     /**
      * 
      */
-//	private static final long serialVersionUID = -5419719246689020293L;
-    
-	
+    private static final long serialVersionUID = 1L;
 
 	@PrimaryKey
     @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
