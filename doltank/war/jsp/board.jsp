@@ -25,22 +25,22 @@
 		<p>The guestbook has no messages.</p>
 	</c:when>
 	<c:otherwise>
-		<c:forEach var="greetings" items="${greetings}">
+		<c:forEach var="boards" items="${boards}">
 			<c:choose>
-				<c:when test="${greetings.author == null}">
+				<c:when test="${boards.author == null}">
 					<p>An anonymous person wrote:</p>
 				</c:when>
 				<c:otherwise>
-					<p><b>${greetings.author.nickname}</b> wrote:</p>
+					<p><b>${boards.author.nickname}</b> wrote:</p>
 				</c:otherwise>
 			</c:choose>
-			<blockquote>${greetings.content}</blockquote>
-			<blockquote>${greetings.date}</blockquote>
+			<blockquote>${boards.content}</blockquote>
+			<blockquote>${boards.date}</blockquote>
 		</c:forEach>
 	</c:otherwise>
 </c:choose>
 
-<form action="/guestbook.do" method="post">
+<form action="/board.do" method="post">
 	<div><textarea name="content" rows="3" cols="60"></textarea></div>
   	<div><input type="submit" value="Post Greeting" /></div>
 </form>
