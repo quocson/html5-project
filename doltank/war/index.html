@@ -29,7 +29,8 @@
 <![endif]-->
 
 <!-- jquery -->
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+<script src="/static/js/jquery-1.7.1.min.js"></script>
+<script src="/static/js/kakaoLink.js"></script>
 
 <!-- audio player 
 <script type="text/javascript" src="http://jongkwang.com/wp-content/themes/elemin/js/audio-player.js"></script>
@@ -112,7 +113,7 @@ line-height: 160%;
 
 </style>
 <link rel="icon"  href="favicon.ico" />
-<link rel="shortcut icon" href="http://jongkwang.com/wp-content/themes/elemin/uploads/favicon/_320x320.jpg" /> 
+<link rel="shortcut icon" href="/static/images/logo_mweb_shareicon_1717.png" /> 
 
 <script src="http://www.google.com/jsapi"></script>
 <script>
@@ -123,6 +124,21 @@ line-height: 160%;
    urls: [ "http://fontface.kr/NanumGothic/css" ]
   }});
  });
+</script>
+<!-- 카카오톡 링크  -->
+<script type="text/javascript">
+$(function() {var msg = "내 홈페이지!!";
+var url = "http://doltank74.appspot.com";
+var appid = "m.kakao.com";
+var appver = "2.0";
+var appname = "카카오";
+var link = new com.kakao.talk.KakaoLink(msg, url, appid, appver, appname);
+
+$("#kakao").click(function() {// button click event
+	alert("kakao");
+  link.execute();
+});
+});
 </script>
 
 <style></style>
@@ -137,20 +153,24 @@ line-height: 160%;
 	<header id="header">
 
 		<hgroup>
-							 <h1 id="site-logo"><a href="http://jongkwang.com/">Doltank.com</a></h1>
+			<h1 id="site-logo"><a href="http://doltank74.appspot.com/">Doltank.com</a></h1>
 			
 			<h2 id="site-description">Ohjoon, Sung</h2>
 		</hgroup>
 
 		<!-- social-widget --> 
 		<div class="social-widget">
-
-			<div id="text-3" class="widget widget_text">			<div class="textwidget"><ul class="links-list"><li><a href="http://facebook.com/doltank74" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','facebook.com']);"><img src="http://themify.me/wp-content/icons/social/facebook.png" alt="Facebook"></a></li>
-<!--<li><a href="http://flickr.com" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','flickr.com']);"><img src="http://themify.me/wp-content/icons/social/flickr.png" alt="Flickr"></a></li>-->
-<li><a href="http://twitter.com/doltank74" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','twitter.com']);"><img src="http://themify.me/wp-content/icons/social/twitter.png" alt="Twitter"></a></li>
-</ul></div>
+			<div id="text-3" class="widget widget_text">			
+			<div class="textwidget"><ul class="links-list">
+			<li>
+				<a href="http://facebook.com/doltank74" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','facebook.com']);"><img src="http://themify.me/wp-content/icons/social/facebook.png" alt="Facebook"></a>
+			</li>
+			<li><a href="" id="kakao"><img src="/static/images/logo_mweb_shareicon_1717.png" alt="Kakao"></a></li>
+			<li><a href="http://twitter.com/doltank74" onclick="javascript:_gaq.push(['_trackEvent','outbound-widget','twitter.com']);"><img src="http://themify.me/wp-content/icons/social/twitter.png" alt="Twitter"></a></li>
+			</ul>
+			</div>
 		</div>
-							<div class="rss"><a href="http://feeds.feedburner.com/doltank74">RSS</a></div>
+		<div class="rss"><a href="http://feeds.feedburner.com/doltank74">RSS</a></div>
 			
 		</div>
 		<!-- /social-widget --> 
