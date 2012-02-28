@@ -62,7 +62,7 @@ public class BoardController {
 		return "redirect:board.do";
 	}
 
-    // 방명록 
+   // 방명록 
     @RequestMapping(value="/guestbook.do", method=RequestMethod.GET)
     public String getGuestbookController(
             HttpServletRequest request,
