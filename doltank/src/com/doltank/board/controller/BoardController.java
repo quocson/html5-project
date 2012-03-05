@@ -23,6 +23,7 @@ public class BoardController {
 
 	@Autowired
 	private BoardService boardService;
+	@Autowired
     private GuestbookService guestbookService;
 	
 	@Autowired

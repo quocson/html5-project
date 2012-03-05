@@ -19,13 +19,13 @@ import com.doltank.board.service.GuestbookService;
 @Controller
 public class GuestBookController {
 
-	@Autowired
+	/*@Autowired
 	private GuestbookService guestbookService;
 	
 	@Autowired
 	private UserService userService;
 	
-/*	@RequestMapping(value="/guestbook.do", method=RequestMethod.GET)
+	@RequestMapping(value="/guestbook.do", method=RequestMethod.GET)
 	public String getGuestbookController(
 			HttpServletRequest request,
 			HttpServletResponse response,
