@@ -43,8 +43,17 @@
 
 <form action="/guestbook.do" method="post">
 	<input type="hidden" id="boardType" name="boardType" value="2" />
+<c:choose>
+	<c:when test="${nickname != null}">
+		<div><input type="text" name="nickName" value="${nickname}" /></div>
+	</c:when>
+	<c:otherwise>
+		Your Email : <input type="email" name="address" placeholder="abc@def.com">
+		<div>Your Nick Name : <input type="edit" name="nickName" value="" placeholder="please type your nick name"/></div>
+	</c:otherwise>
+</c:choose>	
 	<div><textarea name="content" rows="3" cols="60"></textarea></div>
-  	<div><input type="submit" value="Post Greeting" /></div>
+  	<div><input type="submit" value="Submit" /></div>
 </form>
 </body>
 </html>
