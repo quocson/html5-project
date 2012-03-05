@@ -36,11 +36,13 @@
 			</c:choose>
 			<blockquote>${greetings.content}</blockquote>
 			<blockquote>${greetings.date}</blockquote>
+			<blockquote>type : ${greetings.boardType}</blockquote>
 		</c:forEach>
 	</c:otherwise>
 </c:choose>
 
 <form action="/guestbook.do" method="post">
+	<input type="hidden" id="boardType" name="boardType" value="2" />
 	<div><textarea name="content" rows="3" cols="60"></textarea></div>
   	<div><input type="submit" value="Post Greeting" /></div>
 </form>

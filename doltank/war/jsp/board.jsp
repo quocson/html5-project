@@ -36,11 +36,13 @@
 			</c:choose>
 			<blockquote>${boards.content}</blockquote>
 			<blockquote>${boards.date}</blockquote>
+			<blockquote>type : ${boards.boardType}</blockquote>
 		</c:forEach>
 	</c:otherwise>
 </c:choose>
 
 <form action="/board.do" method="post">
+	<input type="hidden" id="boardType" name="boardType" value="1" />
 	<div><textarea name="content" rows="3" cols="60"></textarea></div>
   	<div><input type="submit" value="Post Greeting" /></div>
 </form>
