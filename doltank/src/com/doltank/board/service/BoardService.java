@@ -16,9 +16,9 @@ public class BoardService
 	@Autowired
 	private BoardDao boardDao;
 	
-	public List<Board> getList() 
+	public List<Board> getList(String boardType) 
 	{
-		return boardDao.getList();
+		return boardDao.getList(boardType);
 	}
 	
 	public void writeBoard(User user, String boardType, String content)

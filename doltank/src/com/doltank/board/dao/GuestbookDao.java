@@ -22,7 +22,7 @@ public class GuestbookDao extends JdoDaoSupport
 	@SuppressWarnings("unchecked")
 	public List<Greeting> getList() 
 	{
-		String query = "select from " + Greeting.class.getName() + " order by date desc range 0,5";
+		String query = "select from " + Greeting.class.getName() + " where boardType == '2' order by date desc range 0,5";
 		return (List<Greeting>) getPersistenceManager().newQuery(query).execute();
 	}
 	

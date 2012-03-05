@@ -37,7 +37,7 @@ public class BoardController {
 			ModelMap model)
 	{
 		User user = userService.getCurrentUser();
-		List<Board> boards = boardService.getList();
+		List<Board> boards = boardService.getList("1");
 		
 		if (user != null)
 		{
@@ -71,7 +71,7 @@ public class BoardController {
             ModelMap model)
     {
         User user = userService.getCurrentUser();
-        List<Greeting> greetings = guestbookService.getList();
+        List<Board> boards = boardService.getList("2");
         
         if (user != null)
         {
@@ -83,17 +83,17 @@ public class BoardController {
             model.addAttribute("nickname", null);
             model.addAttribute("userUrl", userService.createLoginURL(request.getRequestURI()));
         }
-        model.addAttribute("count", greetings.size());
-        model.addAttribute("greetings", greetings);
+        model.addAttribute("count", boards.size());
+        model.addAttribute("greetings", boards);
         
         return "guestbook";
     }
     
     // 방명록 저장 
     @RequestMapping(value="/guestbook.do", method=RequestMethod.POST)
-    public String postGuestbookController(String content)
+    public String postGuestbookController(String boardType, String content)
     {
-        guestbookService.writeGreeting(userService.getCurrentUser(), content);
+        boardService.writeBoard(userService.getCurrentUser(),boardType, content);
         return "redirect:guestbook.do";
     }
 }

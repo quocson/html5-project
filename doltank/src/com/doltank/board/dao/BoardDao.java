@@ -20,9 +20,9 @@ public class BoardDao extends JdoDaoSupport
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Board> getList() 
+	public List<Board> getList(String boardType) 
 	{
-		String query = "select from " + Board.class.getName() + " order by date desc range 0,5";
+		String query = "select from " + Board.class.getName() + " where boardType == '" + boardType +"' order by date desc range 0,5";
 		return (List<Board>) getPersistenceManager().newQuery(query).execute();
 	}
 	
