@@ -29,7 +29,7 @@ public class BoardController {
 	@Autowired
 	private UserService userService;
 	
-	// 게시판 
+	// 게시판   
 	@RequestMapping(value="/board.do", method=RequestMethod.GET)
 	public String getBoardController(
 			HttpServletRequest request,
