@@ -13,7 +13,7 @@ import com.doltank.board.domain.Board;
 @Repository
 public class BoardDao extends JdoDaoSupport
 {
-	@Autowired
+	@Autowired   
 	public BoardDao(PersistenceManagerFactory pmf)
 	{
 		setPersistenceManagerFactory(pmf);
